@@ -17,8 +17,8 @@
    <widget class="QTabWidget" name="tabWidget">
     <property name="geometry">
      <rect>
-      <x>30</x>
-      <y>40</y>
+      <x>20</x>
+      <y>50</y>
       <width>1101</width>
       <height>521</height>
      </rect>
@@ -164,7 +164,7 @@ background-color: rgb(255, 255, 255);</string>
         <string>Image_appartement</string>
        </property>
       </widget>
-      <widget class="QPushButton" name="pushButton_3">
+      <widget class="QPushButton" name="modifier">
        <property name="geometry">
         <rect>
          <x>190</x>
@@ -412,6 +412,19 @@ background-color: rgb(255, 85, 0);</string>
         <string/>
        </property>
       </widget>
+     </widget>
+     <widget class="QPushButton" name="quitter">
+      <property name="geometry">
+       <rect>
+        <x>970</x>
+        <y>410</y>
+        <width>93</width>
+        <height>28</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Quitter</string>
+      </property>
      </widget>
     </widget>
    </widget>

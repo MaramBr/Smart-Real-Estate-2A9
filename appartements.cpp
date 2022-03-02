@@ -84,6 +84,27 @@ int Appartements :: getnb_chambres()
                 return query.exec();
 
         }
+        bool Appartements ::modifier (int id_appartement, int prix, int nb_chambres, QString description_A, int id_immeuble)
+        {
+            QString id_appartement_string=QString::number(id_appartement);
+            QString prix_string=QString::number(prix);
+            QString nb_chambres_string=QString::number(nb_chambres);
+
+            QString id_immeuble_string=QString::number(id_immeuble);
+                QSqlQuery query;
+
+
+
+               query.prepare("update appartements set id_appartement=:id_appartement,prix=:prix,nb_chambres=:nb_chambres,description_A=:description_A,id_immeuble=:id_immeuble where id_appartement=:id_appartement");
+               query.bindValue(":id_appartement",id_appartement_string);
+               query.bindValue(":prix",prix_string);
+               query.bindValue(":nb_chambres",nb_chambres_string);
+
+               query.bindValue(":description_A",description_A);
+               query.bindValue(":id_immeuble",id_immeuble_string);
+
+               return query.exec();
+        }
         bool Appartements::supprimer(int id_appartement)
         {
 

@@ -20,6 +20,7 @@ public:
     void setprix(int);
      void setid_immeuble(int);
     bool ajouter();
+    bool modifier(int,int,int,QString,int);
     QSqlQueryModel*afficher();
     bool supprimer(int);
 

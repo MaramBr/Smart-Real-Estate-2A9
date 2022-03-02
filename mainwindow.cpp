@@ -64,14 +64,52 @@ void MainWindow::on_ajouter_clicked()
 void MainWindow::on_supprimer_clicked()
 {
     Appartements a1;
-    ui->tab_appartement->setModel(a1.afficher());
+
         a1.setid_appartement(ui->id_supp->text().toInt());
         bool test =a1.supprimer(a1.getid_appartement());
         QMessageBox msgBox;
         if(test)
+        {
+             ui->tab_appartement->setModel(a1.afficher());
             msgBox.setText("suppression aves succes.");
+        }
         else
             msgBox.setText("echec de suppression");
         msgBox.exec();
 
+}
+
+void MainWindow::on_modifier_clicked()
+{
+
+    Appartements a2;
+
+        a2.setid_appartement(ui->le_id->text().toInt());
+        a2.setprix(ui->le_prix->text().toInt());
+        a2.setnb_chambres(ui->le_nbchambres->text().toInt());
+        a2.setdescription_A(ui->le_description->text());
+        a2.setid_immeuble(ui->le_id2->text().toInt());
+
+       bool test=a2.modifier(a2.getid_appartement(),a2.getprix(),a2.getnb_chambres(),a2.getdescription_A(),a2.getid_immeuble());
+    if (test)
+    {
+        ui->tab_appartement->setModel(a2.afficher());
+
+        QMessageBox::information(nullptr, QObject::tr(" ok"),
+                                 QObject::tr("modif effecte  .\n"
+                                             "Click Cancel to exit."), QMessageBox::Cancel);
+
+       }
+       else
+       {
+
+        QMessageBox::critical(nullptr, QObject::tr("not ok"),
+                    QObject::tr("modif non effecte .\n"
+                                "Click Cancel to exit."), QMessageBox::Cancel);
+       }
+}
+
+void MainWindow::on_quitter_clicked()
+{
+    close();
 }

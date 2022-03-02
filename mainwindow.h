@@ -22,8 +22,12 @@ private slots:
 
     void on_supprimer_clicked();
 
+    void on_modifier_clicked();
+
+    void on_quitter_clicked();
+
 private:
     Ui::MainWindow *ui;
-    Appartements a,a1;
+    Appartements a,a1,a2;
 };
 #endif // MAINWINDOW_H
