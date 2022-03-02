@@ -16,16 +16,16 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_pushButton_clicked();
-
-    void on_pushButton_2_clicked();
-
     void on_ajouter_clicked();
 
     void on_supprimer_clicked();
 
+    void on_modifier_clicked();
+
+    void on_quitter_clicked();
+
 private:
     Ui::MainWindow *ui;
-    Clients c,c1;
+    Clients c,c1,c2;
 };
 #endif // MAINWINDOW_H

@@ -88,6 +88,23 @@ bool Clients:: ajouter()
 
         return query.exec();
 }
+bool Clients::modifier(int CIN, QString nom, QString prenom, int num_tel, QString type, QDate date_ajout)
+{
+    QString num_tel_string=QString::number(num_tel);
+    QString CIN_string=QString::number(CIN);
+    QSqlQuery query;
+       query.prepare("update clients set CIN=:CIN,nom=:nom,prenom=:prenom,num_tel=:num_tel,type=:type,date_ajout=:date_ajout where CIN=:CIN");
+
+       query.bindValue(":CIN",CIN_string);
+       query.bindValue(":nom",nom);
+       query.bindValue(":prenom",prenom);
+       query.bindValue(":num_tel",num_tel_string);
+       query.bindValue(":type",type);
+       query.bindValue(":date_ajout",date_ajout);
+
+       return query.exec();
+
+}
 bool Clients::supprimer(int CIN)
 {
     QSqlQuery query;

@@ -21,6 +21,7 @@ public:
     void settype(QString);
     void setdate(QDate);
     bool ajouter();
+    bool modifier(int,QString,QString,int,QString,QDate);
     QSqlQueryModel*afficher();
     bool supprimer(int);
 

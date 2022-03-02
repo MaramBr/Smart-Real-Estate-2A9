@@ -18,21 +18,15 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     clients.cpp \
     connexion.cpp \
-    dialog_ajout.cpp \
-    dialog_modification.cpp \
     main.cpp \
     mainwindow.cpp
 
 HEADERS += \
     clients.h \
     connexion.h \
-    dialog_ajout.h \
-    dialog_modification.h \
     mainwindow.h
 
 FORMS += \
-    dialog_ajout.ui \
-    dialog_modification.ui \
     mainwindow.ui
 
 # Default rules for deployment.

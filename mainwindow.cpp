@@ -1,7 +1,5 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "dialog_ajout.h"
-#include "dialog_modification.h"
 #include "clients.h"
 #include "connexion.h"
 #include <QMessageBox>
@@ -27,17 +25,6 @@ MainWindow::~MainWindow()
 }
 
 
-void MainWindow::on_pushButton_clicked()
-{
-    Dialog_ajout d_ajout;
-    d_ajout.exec();
-}
-
-void MainWindow::on_pushButton_2_clicked()
-{
-    Dialog_modification d_modification;
-    d_modification.exec();
-}
 
 void MainWindow::on_ajouter_clicked()
 {
@@ -82,4 +69,39 @@ void MainWindow::on_supprimer_clicked()
         else
             msgBox.setText("echec de suppression");
         msgBox.exec();
+}
+
+void MainWindow::on_modifier_clicked()
+{
+    Clients c2;
+
+        c2.setcin(ui->le_cin->text().toInt());
+        c2.setnom(ui->le_nom->text());
+        c2.setprenom(ui->le_prenom->text());
+        c2.setnum(ui->le_num->text().toInt());
+        c2.settype(ui->le_type->text());
+        c2.setdate(  ui->le_date->date());
+
+       bool test=c2.modifier(c2.getcin(),c2.getnom(),c2.getprenom(),c2.getnum(),c2.gettype(),c2.getdate());
+    if (test)
+    {
+        ui->tab_clients->setModel(c2.afficher());
+
+        QMessageBox::information(nullptr, QObject::tr(" ok"),
+                                 QObject::tr("modif effectuer  .\n"
+                                             "Click Cancel to exit."), QMessageBox::Cancel);
+
+       }
+       else
+       {
+
+        QMessageBox::critical(nullptr, QObject::tr("not ok"),
+                    QObject::tr("modif non effectuer .\n"
+                                "Click Cancel to exit."), QMessageBox::Cancel);
+       }
+}
+
+void MainWindow::on_quitter_clicked()
+{
+    close();
 }
