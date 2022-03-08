@@ -270,7 +270,7 @@ background-color: rgb(255, 255, 255);</string>
       <property name="geometry">
        <rect>
         <x>50</x>
-        <y>470</y>
+        <y>460</y>
         <width>101</width>
         <height>31</height>
        </rect>
@@ -472,29 +472,6 @@ background-color: rgb(255, 255, 255);</string>
        <size>
         <width>100</width>
         <height>100</height>
-       </size>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="pushButton_2">
-      <property name="geometry">
-       <rect>
-        <x>150</x>
-        <y>470</y>
-        <width>21</width>
-        <height>31</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="icon">
-       <iconset>
-        <normaloff>../1345823.png</normaloff>../1345823.png</iconset>
-      </property>
-      <property name="iconSize">
-       <size>
-        <width>20</width>
-        <height>20</height>
        </size>
       </property>
      </widget>
