@@ -34,7 +34,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_ajouter_clicked()
 {
-    ui->tab_appartement->setModel(a.afficher());
+
        int id_appartement= ui->le_id->text().toInt();
        int prix =ui->le_prix->text().toInt();
        int nb_chambres =ui->le_nbchambres->text().toInt();

@@ -119,6 +119,7 @@ int Appartements :: getnb_chambres()
 
         QSqlQueryModel * Appartements::afficher()
         {
+
             QSqlQueryModel* model =new QSqlQueryModel();
             model->setQuery("select * from APPARTEMENTS");
             model->setHeaderData(0, Qt::Horizontal, QObject::tr("id_appartement"));
