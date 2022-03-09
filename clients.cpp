@@ -6,14 +6,14 @@
 #include <QString>
 Clients::Clients()
 {
-CIN=0;
+CIN="";
 nom="";
 prenom="";
-num_tel=0;
+num_tel="";
 type="";
 }
 
-Clients::Clients(int CIN,QString nom,QString prenom,int num_tel,QString type,QDate date_ajout)
+Clients::Clients(QString CIN,QString nom,QString prenom,QString num_tel,QString type,QDate date_ajout)
 {
  this->CIN=CIN;
  this->nom=nom;
@@ -22,7 +22,7 @@ Clients::Clients(int CIN,QString nom,QString prenom,int num_tel,QString type,QDa
  this->type=type;
  this->date_ajout=date_ajout;
 }
-int Clients:: getcin()
+QString Clients:: getcin()
 {
     return CIN;
 }
@@ -34,7 +34,7 @@ QString Clients:: getprenom()
 {
     return prenom;
 }
-int Clients:: getnum()
+QString Clients:: getnum()
 {
     return num_tel;
 }
@@ -46,7 +46,7 @@ QDate Clients:: getdate()
 {
     return date_ajout;
 }
-void Clients:: setcin(int CIN)
+void Clients:: setcin(QString CIN)
 {
      this->CIN=CIN;
 }
@@ -58,7 +58,7 @@ void Clients:: setprenom(QString prenom)
 {
      this->prenom=prenom;
 }
-void Clients:: setnum(int num_tel)
+void Clients:: setnum(QString num_tel)
 {
      this->num_tel=num_tel;
 }
@@ -72,40 +72,38 @@ void Clients:: setdate(QDate date_ajout)
 }
 bool Clients:: ajouter()
 {
-        QString num_tel_string=QString::number(num_tel);
-        QString CIN_string=QString::number(CIN);
+
         QSqlQuery query;
 
         query.prepare("INSERT INTO CLIENTS (CIN,nom,prenom,num_tel,type,date_ajout) "
                       "VALUES (:CIN,:nom,:prenom,:num_tel,:type,:date_ajout)");
 
-        query.bindValue(":CIN",CIN_string);
+        query.bindValue(":CIN",CIN);
         query.bindValue(":nom",nom);
         query.bindValue(":prenom",prenom);
-        query.bindValue(":num_tel",num_tel_string);
+        query.bindValue(":num_tel",num_tel);
         query.bindValue(":type",type);
         query.bindValue(":date_ajout",date_ajout);
 
         return query.exec();
 }
-bool Clients::modifier(int CIN, QString nom, QString prenom, int num_tel, QString type, QDate date_ajout)
+bool Clients::modifier(QString CIN, QString nom, QString prenom, QString num_tel, QString type, QDate date_ajout)
 {
-    QString num_tel_string=QString::number(num_tel);
-    QString CIN_string=QString::number(CIN);
+
     QSqlQuery query;
        query.prepare("update clients set CIN=:CIN,nom=:nom,prenom=:prenom,num_tel=:num_tel,type=:type,date_ajout=:date_ajout where CIN=:CIN");
 
-       query.bindValue(":CIN",CIN_string);
+       query.bindValue(":CIN",CIN);
        query.bindValue(":nom",nom);
        query.bindValue(":prenom",prenom);
-       query.bindValue(":num_tel",num_tel_string);
+       query.bindValue(":num_tel",num_tel);
        query.bindValue(":type",type);
        query.bindValue(":date_ajout",date_ajout);
 
        return query.exec();
 
 }
-bool Clients::supprimer(int CIN)
+bool Clients::supprimer(QString CIN)
 {
     QSqlQuery query;
 

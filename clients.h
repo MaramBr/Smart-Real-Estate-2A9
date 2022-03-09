@@ -7,29 +7,29 @@ class Clients
 {
 public:
     Clients();
-    Clients(int,QString,QString,int,QString,QDate);
-    int getcin();
+    Clients(QString,QString,QString,QString,QString,QDate);
+    QString getcin();
     QString getnom();
     QString getprenom();
-    int getnum();
+    QString getnum();
     QString gettype();
     QDate getdate();
-    void setcin(int);
+    void setcin(QString);
     void setnom(QString);
     void setprenom(QString);
-    void setnum(int);
+    void setnum(QString);
     void settype(QString);
     void setdate(QDate);
     bool ajouter();
-    bool modifier(int,QString,QString,int,QString,QDate);
+    bool modifier(QString,QString,QString,QString,QString,QDate);
     QSqlQueryModel*afficher();
-    bool supprimer(int);
+    bool supprimer(QString);
 
 private:
-    int CIN;
+    QString CIN;
     QString nom;
     QString prenom;
-    int num_tel;
+    QString num_tel;
     QString type;
     QDate date_ajout;
 };
