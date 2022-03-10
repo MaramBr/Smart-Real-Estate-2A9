@@ -8,12 +8,19 @@
 #include <QSqlQueryModel>
 #include <QDate>
 #include <QTableView>
+#include <QIntValidator>
+#include <QRegExpValidator>
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
     ui->tab_clients->setModel(c.afficher());
+    ui->le_cin->setValidator( new QRegExpValidator (QRegExp("[1-9]{1,8}")));
+    ui->le_nom->setValidator( new QRegExpValidator (QRegExp("[a-z]{1,10}")));
+    ui->le_prenom->setValidator( new QRegExpValidator (QRegExp("[a-z]{1,10}")));
+    ui->le_num->setValidator( new QRegExpValidator (QRegExp("[0-9]{1,8}")));
+    ui->le_type->setValidator( new QRegExpValidator (QRegExp("[a-z]{1,15}")));
 
 }
 MainWindow::~MainWindow()
