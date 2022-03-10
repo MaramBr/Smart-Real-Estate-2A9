@@ -131,3 +131,34 @@ int Appartements :: getnb_chambres()
 
         return model;
         }
+
+        QSqlQueryModel * Appartements::triercroissant()
+        {
+
+            QSqlQueryModel* model =new QSqlQueryModel();
+            model->setQuery("select * from APPARTEMENTS order by prix asc");
+            model->setHeaderData(0, Qt::Horizontal, QObject::tr("id_appartement"));
+             model->setHeaderData(1, Qt::Horizontal, QObject::tr("prix"));
+               model->setHeaderData(2, Qt::Horizontal, QObject::tr("nb_chambres"));
+           model->setHeaderData(3, Qt::Horizontal, QObject::tr("description_A"));
+            model->setHeaderData(4, Qt::Horizontal, QObject::tr("id_immeuble"));
+
+
+        return model;
+        }
+        QSqlQueryModel * Appartements::trierdecroissant()
+        {
+
+            QSqlQueryModel* model =new QSqlQueryModel();
+            model->setQuery("select * from APPARTEMENTS order by prix desc");
+            model->setHeaderData(0, Qt::Horizontal, QObject::tr("id_appartement"));
+             model->setHeaderData(1, Qt::Horizontal, QObject::tr("prix"));
+               model->setHeaderData(2, Qt::Horizontal, QObject::tr("nb_chambres"));
+           model->setHeaderData(3, Qt::Horizontal, QObject::tr("description_A"));
+            model->setHeaderData(4, Qt::Horizontal, QObject::tr("id_immeuble"));
+
+
+        return model;
+        }
+
+

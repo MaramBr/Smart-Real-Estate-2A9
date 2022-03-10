@@ -23,6 +23,9 @@ public:
     bool modifier(int,int,int,QString,int);
     QSqlQueryModel*afficher();
     bool supprimer(int);
+    QSqlQueryModel*triercroissant();
+    QSqlQueryModel*trierdecroissant();
+
 
 private:
    int id_appartement;
