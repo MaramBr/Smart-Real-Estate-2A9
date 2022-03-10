@@ -1,4 +1,4 @@
-#include "mainwindow.h"
+ #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "contrat.h"
 #include "connexion.h"
@@ -8,6 +8,7 @@
 #include <QApplication>
 #include <QDate>
 #include <QIntValidator>
+#include <QRegExpValidator>
 #include <QTableView>
 
 MainWindow::MainWindow(QWidget *parent)
@@ -17,10 +18,14 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->setupUi(this);
 ui->tab_contrat->setModel(c.afficher());
-ui->le_num->setValidator( new QIntValidator(0, 99999, this));
+ui->le_num->setValidator( new QRegExpValidator(QRegExp("[a-z0-9]{1,4}")));
+ui->le_mode->setValidator( new QRegExpValidator(QRegExp("[a-z]{1,10}")));
+
 ui->le_montant->setValidator( new QIntValidator(0,999999, this));
-ui->le_cin->setValidator( new QIntValidator(0,99999999, this));
-ui->tab_contrat->setModel(c.afficher());
+ui->le_cin->setValidator( new QRegExpValidator(QRegExp("[1-9]{1,8}")));
+
+//ui->le_cin->setValidator( new QRegExpValidator(QRegExp("{1,10}")));
+
 
 }
 
@@ -34,12 +39,16 @@ MainWindow::~MainWindow()
 void MainWindow::on_ajout_clicked()
 {
 
-    int numc= ui->le_num->text().toInt();
+
+    QString numc= ui->le_num->text();
+
+
     QDate date_signification =ui->le_date->date();
     int montant =ui->le_montant->text().toInt();
     QString typec =ui->le_type->currentText();
     QString mode_paiement =ui->le_mode->text();
-    int cin =ui->le_cin->text().toInt();
+
+   QString cin =ui->le_cin->text();
     Contrat C(numc,date_signification,montant,typec,mode_paiement,cin);
    bool test=C.ajouter();
 if (test)
@@ -69,7 +78,7 @@ void MainWindow::on_supprimer_clicked()
 
     Contrat C1;
 
-    C1.setnum(ui->le_num_supp->text().toInt());
+    C1.setnum(ui->le_num_supp->text());
     bool test =C1.supprimer(C1.getnum());
     QMessageBox msgBox;
     if(test)
@@ -88,12 +97,12 @@ void MainWindow::on_modifier_clicked()
 {
  Contrat c2;
 
-    c2.setnum(ui->le_num->text().toInt());
+    c2.setnum(ui->le_num->text());
     c2.setdate(  ui->le_date->date());
     c2.setmontant(ui->le_montant->text().toInt());
     c2.settype(ui->le_type->currentText());
     c2.setmode(ui->le_mode->text());
-    c2.setcin(ui->le_cin->text().toInt());
+    c2.setcin(ui->le_cin->text());
    bool test=c2.modifier(c2.getnum(),c2.getdate_s(),c2.getmontant(),c2.gettype(),c2.getmode(),c2.getcin());
 if (test)
 {

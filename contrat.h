@@ -9,30 +9,29 @@ class Contrat
 {
 public:
     Contrat();
-    Contrat(int,QDate,int,QString,QString,int);
-    int getnum();
+    Contrat(QString,QDate,int,QString,QString,QString);
+    QString getnum();
     QDate getdate_s();
     int getmontant();
     QString gettype();
     QString getmode();
-    int getcin();
-    void setnum(int);
+    QString getcin();
+    void setnum(QString);
     void setdate(QDate);
     void setmontant(int);
     void settype(QString);
     void setmode(QString);
-    void setcin(int);
+    void setcin(QString);
     bool ajouter();
-    bool modifier (int,QDate,int,QString,QString,int);
+    bool modifier (QString,QDate,int,QString,QString,QString);
     QSqlQueryModel* afficher();
-    bool supprimer(int);
-
+    bool supprimer(QString);
 private:
-    int numc;
+    QString numc;
     QDate  date_signification;
     int montant;
     QString  typec,mode_paiement;
-    int cin;
+    QString cin;
 
 };
 
