@@ -24,6 +24,8 @@ public:
     bool modifier(QString,QString,QString,QString,QString,QDate);
     QSqlQueryModel*afficher();
     bool supprimer(QString);
+    QSqlQueryModel*triercroissant();
+    QSqlQueryModel*trierdecroissant();
 
 private:
     QString CIN;

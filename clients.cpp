@@ -125,4 +125,27 @@ QSqlQueryModel*Clients::afficher()
     model->setHeaderData(5, Qt::Horizontal, QObject::tr("date_ajout"));
 return model;
 }
-
+QSqlQueryModel*Clients::triercroissant()
+{
+    QSqlQueryModel* model =new QSqlQueryModel();
+    model->setQuery("select * from clients order by nom asc");
+    model->setHeaderData(0, Qt::Horizontal, QObject::tr("CIN"));
+    model->setHeaderData(1, Qt::Horizontal, QObject::tr("nom"));
+    model->setHeaderData(2, Qt::Horizontal, QObject::tr("prenom"));
+    model->setHeaderData(3, Qt::Horizontal, QObject::tr("num_tel"));
+    model->setHeaderData(4, Qt::Horizontal, QObject::tr("type"));
+    model->setHeaderData(5, Qt::Horizontal, QObject::tr("date_ajout"));
+return model;
+}
+QSqlQueryModel*Clients::trierdecroissant()
+{
+    QSqlQueryModel* model =new QSqlQueryModel();
+    model->setQuery("select * from clients order by nom desc");
+    model->setHeaderData(0, Qt::Horizontal, QObject::tr("CIN"));
+    model->setHeaderData(1, Qt::Horizontal, QObject::tr("nom"));
+    model->setHeaderData(2, Qt::Horizontal, QObject::tr("prenom"));
+    model->setHeaderData(3, Qt::Horizontal, QObject::tr("num_tel"));
+    model->setHeaderData(4, Qt::Horizontal, QObject::tr("type"));
+    model->setHeaderData(5, Qt::Horizontal, QObject::tr("date_ajout"));
+return model;
+}

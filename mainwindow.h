@@ -24,6 +24,10 @@ private slots:
 
     void on_quitter_clicked();
 
+    void on_radioButton_5_clicked();
+
+    void on_radioButton_6_clicked();
+
 private:
     Ui::MainWindow *ui;
     Clients c,c1,c2;

@@ -105,3 +105,13 @@ void MainWindow::on_quitter_clicked()
 {
     close();
 }
+
+void MainWindow::on_radioButton_5_clicked()
+{
+     ui->tab_clients->setModel(c2.triercroissant());
+}
+
+void MainWindow::on_radioButton_6_clicked()
+{
+     ui->tab_clients->setModel(c2.trierdecroissant());
+}
