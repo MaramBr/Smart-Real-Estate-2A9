@@ -149,3 +149,11 @@ QSqlQueryModel*Clients::trierdecroissant()
     model->setHeaderData(5, Qt::Horizontal, QObject::tr("date_ajout"));
 return model;
 }
+QSqlQueryModel*Clients::recherche(QString CIN)
+{
+    QString rech=CIN;
+    QSqlQueryModel* model =new QSqlQueryModel();
+    model->setQuery("select * from clients where CIN ='"+rech+"'");
+
+return model;
+}

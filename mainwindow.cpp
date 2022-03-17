@@ -21,7 +21,8 @@ MainWindow::MainWindow(QWidget *parent)
     ui->le_prenom->setValidator( new QRegExpValidator (QRegExp("[a-z]{1,10}")));
     ui->le_num->setValidator( new QRegExpValidator (QRegExp("[0-9]{1,8}")));
     ui->le_type->setValidator( new QRegExpValidator (QRegExp("[a-z]{1,15}")));
-
+    ui->cin_sup->setValidator( new QRegExpValidator (QRegExp("[1-9]{1,8}")));
+    ui->cin_rech->setValidator( new QRegExpValidator (QRegExp("[1-9]{1,8}")));
 }
 MainWindow::~MainWindow()
 {
@@ -119,5 +120,7 @@ void MainWindow::on_radioButton_6_clicked()
 
 void MainWindow::on_pushButton_13_clicked()
 {
-
+    Clients c3;
+    c3.setcin(ui->cin_rech->text());
+    ui->tab_clients->setModel(c3.recherche(c3.getcin()));
 }

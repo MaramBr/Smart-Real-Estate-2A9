@@ -475,16 +475,6 @@ background-color: rgb(255, 255, 255);</string>
        </size>
       </property>
      </widget>
-     <widget class="QLineEdit" name="lineEdit">
-      <property name="geometry">
-       <rect>
-        <x>170</x>
-        <y>530</y>
-        <width>113</width>
-        <height>22</height>
-       </rect>
-      </property>
-     </widget>
     </widget>
     <widget class="QWidget" name="tab_7">
      <attribute name="title">
@@ -495,8 +485,8 @@ background-color: rgb(255, 255, 255);</string>
        <rect>
         <x>40</x>
         <y>40</y>
-        <width>571</width>
-        <height>391</height>
+        <width>591</width>
+        <height>441</height>
        </rect>
       </property>
       <property name="title">
@@ -969,12 +959,12 @@ background-color: rgb(255, 255, 255);</string>
         <rect>
          <x>60</x>
          <y>330</y>
-         <width>56</width>
+         <width>71</width>
          <height>16</height>
         </rect>
        </property>
        <property name="text">
-        <string>Locateurs</string>
+        <string>Locataires</string>
        </property>
       </widget>
       <widget class="QLabel" name="label_9">
@@ -1016,6 +1006,29 @@ background-color: rgb(255, 255, 255);</string>
         <string>20%</string>
        </property>
       </widget>
+     </widget>
+     <widget class="QPushButton" name="pushButton_2">
+      <property name="geometry">
+       <rect>
+        <x>1140</x>
+        <y>20</y>
+        <width>101</width>
+        <height>91</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="icon">
+       <iconset>
+        <normaloff>../logo.png</normaloff>../logo.png</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>100</width>
+        <height>100</height>
+       </size>
+      </property>
      </widget>
     </widget>
    </widget>

@@ -32,6 +32,6 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    Clients c,c1,c2;
+    Clients c,c1,c2,c3;
 };
 #endif // MAINWINDOW_H

@@ -26,7 +26,7 @@ public:
     bool supprimer(QString);
     QSqlQueryModel*triercroissant();
     QSqlQueryModel*trierdecroissant();
-
+    QSqlQueryModel*recherche(QString);
 
 private:
     QString CIN;
