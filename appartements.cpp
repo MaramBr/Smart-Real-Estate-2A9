@@ -4,14 +4,14 @@
 
 Appartements::Appartements()
 {
-    id_appartement=0;
+    id_appartement="";
     prix=0;
     nb_chambres=0;
     description_A="";
     id_immeuble=0;
 
 }
-Appartements::Appartements(int id_appartement,int prix,int nb_chambres,QString description_A,int id_immeuble)
+Appartements::Appartements(QString id_appartement,int prix,int nb_chambres,QString description_A,int id_immeuble)
 {
       this->id_appartement=id_appartement;
       this->prix=prix;
@@ -19,7 +19,7 @@ Appartements::Appartements(int id_appartement,int prix,int nb_chambres,QString d
       this->description_A=description_A;
       this->id_immeuble=id_immeuble;
 }
-int Appartements:: getid_appartement()
+ QString Appartements:: getid_appartement()
 {
     return id_appartement;
 }
@@ -39,7 +39,7 @@ int Appartements :: getnb_chambres()
  {
      return id_immeuble;
  }
-   void Appartements :: setid_appartement(int id_appartement)
+   void Appartements :: setid_appartement( QString id_appartement)
    {
       this->id_appartement=id_appartement;
    }
@@ -63,7 +63,7 @@ int Appartements :: getnb_chambres()
 
         bool Appartements :: ajouter()
         {
-            QString id_appartement_string=QString::number(id_appartement);
+
             QString prix_string=QString::number(prix);
             QString nb_chambres_string=QString::number(nb_chambres);
 
@@ -72,7 +72,7 @@ int Appartements :: getnb_chambres()
 
                 query.prepare("INSERT INTO APPARTEMENTS (id_appartement,prix,nb_chambres,description_A,id_immeuble) "
                               "VALUES (:id_appartement,:prix,:nb_chambres,:description_A,:id_immeuble)");
-                query.bindValue(":id_appartement",id_appartement_string);
+                query.bindValue(":id_appartement",id_appartement);
                 query.bindValue(":prix",prix_string);
                 query.bindValue(":nb_chambres",nb_chambres_string);
 
@@ -84,9 +84,9 @@ int Appartements :: getnb_chambres()
                 return query.exec();
 
         }
-        bool Appartements ::modifier (int id_appartement, int prix, int nb_chambres, QString description_A, int id_immeuble)
+        bool Appartements ::modifier ( QString id_appartement, int prix, int nb_chambres, QString description_A, int id_immeuble)
         {
-            QString id_appartement_string=QString::number(id_appartement);
+
             QString prix_string=QString::number(prix);
             QString nb_chambres_string=QString::number(nb_chambres);
 
@@ -96,7 +96,7 @@ int Appartements :: getnb_chambres()
 
 
                query.prepare("update appartements set id_appartement=:id_appartement,prix=:prix,nb_chambres=:nb_chambres,description_A=:description_A,id_immeuble=:id_immeuble where id_appartement=:id_appartement");
-               query.bindValue(":id_appartement",id_appartement_string);
+               query.bindValue(":id_appartement",id_appartement);
                query.bindValue(":prix",prix_string);
                query.bindValue(":nb_chambres",nb_chambres_string);
 
@@ -105,7 +105,7 @@ int Appartements :: getnb_chambres()
 
                return query.exec();
         }
-        bool Appartements::supprimer(int id_appartement)
+        bool Appartements::supprimer( QString id_appartement)
         {
 
 
@@ -160,5 +160,14 @@ int Appartements :: getnb_chambres()
 
         return model;
         }
+       QSqlQueryModel * Appartements::rechercher(QString id_appartement)
+         {
+
+           QSqlQueryModel * model= new QSqlQueryModel();
+            QString res= id_appartement;
+            model->setQuery("select * from Appartements where id_appartement='"+res+"'");
+
+           return model;
+         }
 
 

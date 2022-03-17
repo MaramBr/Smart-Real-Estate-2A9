@@ -30,8 +30,10 @@ private slots:
 
     void on_radioButton_6_clicked();
 
+    void on_pushButton_4_clicked();
+
 private:
     Ui::MainWindow *ui;
-    Appartements a,a1,a2;
+    Appartements a,a1,a2,a3;
 };
 #endif // MAINWINDOW_H

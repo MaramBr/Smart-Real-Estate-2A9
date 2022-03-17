@@ -269,7 +269,7 @@ background-color: rgb(255, 85, 0);</string>
       <property name="title">
        <string>Rechercher une maison </string>
       </property>
-      <widget class="QLineEdit" name="lineEdit_23">
+      <widget class="QLineEdit" name="id_rech">
        <property name="geometry">
         <rect>
          <x>100</x>

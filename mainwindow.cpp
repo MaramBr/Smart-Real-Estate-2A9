@@ -15,10 +15,11 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
      ui->tab_appartement->setModel(a.afficher());
-    ui->le_id->setValidator( new QIntValidator(0, 99999, this));
+
     ui->le_nbchambres->setValidator( new QIntValidator(0,9, this));
     ui->le_prix->setValidator( new QIntValidator(0,999999, this));
     ui->le_id2->setValidator( new QIntValidator(0, 99999, this));
+    ui->le_id->setValidator( new QRegExpValidator(QRegExp("[0-9]{1,4}")));
 
     ui->tab_appartement->setModel(a.afficher());
 
@@ -35,7 +36,7 @@ MainWindow::~MainWindow()
 void MainWindow::on_ajouter_clicked()
 {
 
-       int id_appartement= ui->le_id->text().toInt();
+       QString id_appartement= ui->le_id->text();
        int prix =ui->le_prix->text().toInt();
        int nb_chambres =ui->le_nbchambres->text().toInt();
        QString description_A =ui->le_description->text();
@@ -65,7 +66,7 @@ void MainWindow::on_supprimer_clicked()
 {
     Appartements a1;
 
-        a1.setid_appartement(ui->id_supp->text().toInt());
+        a1.setid_appartement(ui->id_supp->text());
         bool test =a1.supprimer(a1.getid_appartement());
         QMessageBox msgBox;
         if(test)
@@ -84,7 +85,7 @@ void MainWindow::on_modifier_clicked()
 
     Appartements a2;
 
-        a2.setid_appartement(ui->le_id->text().toInt());
+        a2.setid_appartement(ui->le_id->text());
         a2.setprix(ui->le_prix->text().toInt());
         a2.setnb_chambres(ui->le_nbchambres->text().toInt());
         a2.setdescription_A(ui->le_description->text());
@@ -123,3 +124,13 @@ void MainWindow::on_radioButton_6_clicked()
 {
       ui->tab_appartement->setModel(a.trierdecroissant());
 }
+
+void MainWindow::on_pushButton_4_clicked()
+{
+    Appartements a3;
+    a3.setid_appartement(ui->id_rech->text());
+    ui->tab_appartement->setModel(a3.rechercher(a3.getid_appartement()));
+}
+
+
+
