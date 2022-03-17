@@ -17,7 +17,7 @@
    <string notr="true">background-color: rgb(255, 255, 255);</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QTabWidget" name="tabWidget">
+   <widget class="QTabWidget" name="recherche">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -340,7 +340,7 @@ background-color: rgb(255, 255, 255);</string>
         <string>Cin </string>
        </property>
       </widget>
-      <widget class="QLineEdit" name="lineEdit_23">
+      <widget class="QLineEdit" name="cin_rech">
        <property name="geometry">
         <rect>
          <x>150</x>
@@ -473,6 +473,16 @@ background-color: rgb(255, 255, 255);</string>
         <width>100</width>
         <height>100</height>
        </size>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="lineEdit">
+      <property name="geometry">
+       <rect>
+        <x>170</x>
+        <y>530</y>
+        <width>113</width>
+        <height>22</height>
+       </rect>
       </property>
      </widget>
     </widget>

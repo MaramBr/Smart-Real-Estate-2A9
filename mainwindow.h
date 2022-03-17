@@ -28,6 +28,8 @@ private slots:
 
     void on_radioButton_6_clicked();
 
+    void on_pushButton_13_clicked();
+
 private:
     Ui::MainWindow *ui;
     Clients c,c1,c2;

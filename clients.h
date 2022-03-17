@@ -27,6 +27,7 @@ public:
     QSqlQueryModel*triercroissant();
     QSqlQueryModel*trierdecroissant();
 
+
 private:
     QString CIN;
     QString nom;

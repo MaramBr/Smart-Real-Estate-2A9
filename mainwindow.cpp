@@ -115,3 +115,9 @@ void MainWindow::on_radioButton_6_clicked()
 {
      ui->tab_clients->setModel(c2.trierdecroissant());
 }
+
+
+void MainWindow::on_pushButton_13_clicked()
+{
+
+}
