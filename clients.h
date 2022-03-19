@@ -27,6 +27,7 @@ public:
     QSqlQueryModel*triercroissant();
     QSqlQueryModel*trierdecroissant();
     QSqlQueryModel*recherche(QString);
+    bool excel();
 
 private:
     QString CIN;

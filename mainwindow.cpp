@@ -10,6 +10,9 @@
 #include <QTableView>
 #include <QIntValidator>
 #include <QRegExpValidator>
+#include <QSqlQuery>
+#include <QDesktopServices>
+#include <QUrl>
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -123,4 +126,12 @@ void MainWindow::on_pushButton_13_clicked()
     Clients c3;
     c3.setcin(ui->cin_rech->text());
     ui->tab_clients->setModel(c3.recherche(c3.getcin()));
+}
+
+void MainWindow::on_pushButton_12_clicked()
+{
+    Clients c4;
+    c4.excel();
+    QString ExcelFileName  = "C:/excel/Clients.csv";
+    QDesktopServices::openUrl(QUrl(ExcelFileName, QUrl::TolerantMode));
 }

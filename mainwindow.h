@@ -30,8 +30,10 @@ private slots:
 
     void on_pushButton_13_clicked();
 
+    void on_pushButton_12_clicked();
+
 private:
     Ui::MainWindow *ui;
-    Clients c,c1,c2,c3;
+    Clients c,c1,c2,c3,c4;
 };
 #endif // MAINWINDOW_H

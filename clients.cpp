@@ -4,6 +4,12 @@
 #include <QDate>
 #include <QObject>
 #include <QString>
+#include <QSqlRecord>
+#include <QFile>
+#include <QTextStream>
+#include <iostream>
+#include <string>
+
 Clients::Clients()
 {
 CIN="";
@@ -157,3 +163,37 @@ QSqlQueryModel*Clients::recherche(QString CIN)
 
 return model;
 }
+bool Clients::excel()
+{
+    QSqlQuery q("select * from clients");
+      QSqlRecord rec = q.record();
+
+      QFile fichier("C:/excel/Clients.csv");
+
+      if(fichier.open(QIODevice::WriteOnly | QIODevice::Text))
+      {
+          QTextStream stream(&fichier);
+
+      int cinCol = rec.indexOf("CIN");
+      int nomCol = rec.indexOf("nom");
+      int prenomCol = rec.indexOf("prenom");
+      int numCol = rec.indexOf("num_tel");
+      int typecol = rec.indexOf("type");
+      int datecol = rec.indexOf("date_ajout");
+
+        //std::cout << "cinCol " << cinCol << std::endl;
+        //std::cout << "nomCol " << nomCol << std::endl;
+
+      stream << "CIN" << ";" << "nom" << ";" << "prenom" << ";" << "num_tel" << ";" << "type"<< ";" << "date_ajout" <<  "\n";
+
+      while (q.next())
+          stream  << q.value(cinCol).toString() << ";" << q.value(nomCol).toString() << ";" << q.value(prenomCol).toString() << ";"
+                  << q.value(numCol).toString()<< ";" <<  q.value(typecol).toString()<< ";" <<  q.value(datecol).toString().left(10) << "\n";
+
+                }
+      fichier.close();
+      return q.exec();
+}
+
+
+
