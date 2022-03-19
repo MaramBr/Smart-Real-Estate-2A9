@@ -2,7 +2,7 @@
 #define MAINWINDOW_H
 #include "contrat.h"
 #include <QMainWindow>
-
+#include <vector>
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -27,8 +27,18 @@ private slots:
 
     void on_quitter_clicked();
 
+    void on_radioButton_clicked();
+
+    void on_radioButton_2_clicked();
+
+    void on_pushButton_5_clicked();
+
+    void on_tab_contrat_activated(const QModelIndex &index);
+
+    void on_QR_code_clicked();
+
 private:
     Ui::MainWindow *ui;
-     Contrat c,C1,c2;
+     Contrat c,C1,c2,c3;
 };
 #endif // MAINWINDOW_H

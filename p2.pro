@@ -19,12 +19,14 @@ SOURCES += \
     connexion.cpp \
     contrat.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    qrcodegen.cpp
 
 HEADERS += \
     connexion.h \
     contrat.h \
-    mainwindow.h
+    mainwindow.h \
+    qrcodegen.hpp
 
 FORMS += \
     mainwindow.ui

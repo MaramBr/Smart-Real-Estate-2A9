@@ -10,6 +10,9 @@
 #include <QIntValidator>
 #include <QRegExpValidator>
 #include <QTableView>
+#include <QSqlQuery>
+#include <QSqlError>
+#include <QDebug>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -18,7 +21,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->setupUi(this);
 ui->tab_contrat->setModel(c.afficher());
-ui->le_num->setValidator( new QRegExpValidator(QRegExp("[a-z0-9]{1,4}")));
+ui->le_num->setValidator( new QRegExpValidator(QRegExp("[0-9]{1,4}")));
 ui->le_mode->setValidator( new QRegExpValidator(QRegExp("[a-z]{1,10}")));
 
 ui->le_montant->setValidator( new QIntValidator(0,999999, this));
@@ -126,4 +129,101 @@ if (test)
 void MainWindow::on_quitter_clicked()
 {
     close();
+}
+
+void MainWindow::on_radioButton_clicked()
+{
+    ui->tab_contrat->setModel(c.triercroissant());
+
+}
+
+void MainWindow::on_radioButton_2_clicked()
+{
+    ui->tab_contrat->setModel(c.trierdecroissant());
+
+}
+
+
+void MainWindow::on_pushButton_5_clicked()
+{
+    Contrat c3;
+
+    c3.setnum(ui->recherche->text());
+    ui->tab_contrat->setModel(c3.recherche(c3.getnum()));
+
+
+
+}
+
+void MainWindow::on_tab_contrat_activated(const QModelIndex &index)
+{
+    Contrat cc;
+    QString val = ui->tab_contrat->model()->data(index).toString();
+    Connection c;
+if(!c.createconnect())
+{
+qDebug() <<"failed to open";
+return;
+}
+c.createconnect();
+    QSqlQuery query;
+    query.prepare("select * from CONTRATS where numc='"+val+"' OR date_signification='"+val+"' OR montant='"+val+"' OR  typec='"+val+"' OR mode_paiement='"+val+"' OR cin='"+val+"' ");
+    if (query.exec())
+    {
+
+        while (query.next())
+        {
+            ui->le_num->setText(query.value(0).toString());
+            ui->le_date->setDate(query.value(1).toDate());
+            ui->le_montant->setText(query.value(2).toString());
+            ui->le_type->setCurrentText(query.value(3).toString());
+            ui->le_mode->setText(query.value(4).toString());
+            ui->le_cin->setText(query.value(5).toString());
+        }
+    }
+    else
+    {
+        QMessageBox::critical(this,tr("erreur"),query.lastError().text());
+    }
+}
+
+void MainWindow::on_QR_code_clicked()
+{
+
+    c.generateQr();
+
+//    QString qr=ui->le_QR->text();
+//    if(qr=="1")
+//          {
+//              QPixmap pix("C:/Users/Aziz-PC/OneDrive/Bureau/school/2eme anne/projet c++/qr/1.png");
+//              int w = ui->label_pic_2->width();
+//              int h = ui->label_pic_2->height();
+//               ui->label_pic_2->setPixmap(pix.scaled(w,h,Qt::KeepAspectRatio));
+
+
+//          }
+//   else if(qr=="2")
+//          {
+//              QPixmap pix("C:/Users/Aziz-PC/OneDrive/Bureau/school/2eme anne/projet c++/qr/2.png");
+//              int w = ui->label_pic_2->width();
+//              int h = ui->label_pic_2->height();
+//               ui->label_pic_2->setPixmap(pix.scaled(w,h,Qt::KeepAspectRatio));
+
+
+//          }
+//   else if(qr=="3")
+//          {
+//              QPixmap pix("C:/Users/Aziz-PC/OneDrive/Bureau/school/2eme anne/projet c++/qr/3.png");
+//              int w = ui->label_pic_2->width();
+//              int h = ui->label_pic_2->height();
+//               ui->label_pic_2->setPixmap(pix.scaled(w,h,Qt::KeepAspectRatio));
+
+
+//          }
+//    else
+//    {
+//        QMessageBox msgBox;
+
+//               msgBox.setText("taper 1 ou 2 ou 3");
+//           msgBox.exec();
 }

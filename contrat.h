@@ -5,6 +5,15 @@
 #include <QDate>
 #include <QTableView>
 
+
+
+#include "qrcodegen.hpp"
+using qrcodegen::QrCode;
+using qrcodegen::QrSegment;
+using namespace std;
+
+
+
 class Contrat
 {
 public:
@@ -25,7 +34,16 @@ public:
     bool ajouter();
     bool modifier (QString,QDate,int,QString,QString,QString);
     QSqlQueryModel* afficher();
+    QSqlQueryModel* triercroissant();
+    QSqlQueryModel* trierdecroissant();
+    QSqlQueryModel * recherche(QString numc);
+bool display();
     bool supprimer(QString);
+
+    void generateQr();
+    void printQr(const QrCode &qr);
+    std::string toSvgString(const QrCode &qr, int border);
+
 private:
     QString numc;
     QDate  date_signification;
