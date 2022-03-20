@@ -10,6 +10,7 @@
 #include <iostream>
 #include <string>
 
+
 Clients::Clients()
 {
 CIN="";
@@ -190,10 +191,97 @@ bool Clients::excel()
           stream  << q.value(cinCol).toString() << ";" << q.value(nomCol).toString() << ";" << q.value(prenomCol).toString() << ";"
                   << q.value(numCol).toString()<< ";" <<  q.value(typecol).toString()<< ";" <<  q.value(datecol).toString().left(10) << "\n";
 
-                }
+        }
       fichier.close();
       return q.exec();
 }
 
+void Clients::stat(QCustomPlot *customPlot)
+{
+    QSqlQuery query,query1;
+    // set dark background gradient:
+    QLinearGradient gradient(0, 0, 0, 400);
+    gradient.setColorAt(0, QColor(156, 212, 114));
+    gradient.setColorAt(0.38, QColor(191, 234, 170));
+    gradient.setColorAt(1, QColor(212, 236, 201));
+    customPlot->clearPlottables();
+    customPlot->clearGraphs();
+    customPlot->replot();
+
+    customPlot->setBackground(QBrush(gradient));
 
 
+    QCPBars *fossil = new QCPBars(customPlot->xAxis, customPlot->yAxis);
+
+    fossil->setAntialiased(false);
+
+    fossil->setStackingGap(1);
+    // set names and colors:
+    fossil->setName("statistique selon le type de clients");
+    fossil->setPen(QPen(QColor(125, 198, 209).lighter(170)));
+    fossil->setBrush(QColor(125, 198, 209));
+
+    QVector<double> ticks;
+    QVector<QString> labels;
+    query.prepare("SELECT COUNT(DISTINCT CIN) FROM clients where type='locataire' ");
+    query.exec();
+    int un;
+    while(query.next())
+    {
+        un=query.value(0).toInt();
+        qDebug()<<un;
+    }
+
+    query.prepare("SELECT COUNT(DISTINCT CIN) FROM clients where type='propreataire'");
+    query.exec();
+    int deux;
+    while(query.next())
+    {
+        deux=query.value(0).toInt();
+    }
+
+    ticks << 1 << 2 ;
+    labels << "Locataires" << "Propreataires"  ;
+    QSharedPointer<QCPAxisTickerText> textTicker(new QCPAxisTickerText);
+    textTicker->addTicks(ticks, labels);
+    customPlot->xAxis->setTicker(textTicker);
+    customPlot->xAxis->setTickLabelRotation(60);
+    customPlot->xAxis->setSubTicks(false);
+    customPlot->xAxis->setTickLength(0, 4);
+    customPlot->xAxis->setRange(0, 8);
+    customPlot->xAxis->setBasePen(QPen(Qt::black));
+    customPlot->xAxis->setTickPen(QPen(Qt::black));
+    customPlot->xAxis->grid()->setVisible(true);
+    customPlot->xAxis->grid()->setPen(QPen(QColor(130, 130, 130), 0, Qt::DotLine));
+    customPlot->xAxis->setTickLabelColor(Qt::black);
+    customPlot->xAxis->setLabelColor(Qt::green);
+
+    // prepare y axis:
+    customPlot->yAxis->setRange(0, 20);
+    customPlot->yAxis->setPadding(5);
+    customPlot->yAxis->setLabel("Nombre de Clients");
+    customPlot->yAxis->setBasePen(QPen(Qt::black));
+    customPlot->yAxis->setTickPen(QPen(Qt::black));
+    customPlot->yAxis->setSubTickPen(QPen(Qt::black));
+    customPlot->yAxis->grid()->setSubGridVisible(true);
+    customPlot->yAxis->setTickLabelColor(Qt::black);
+    customPlot->yAxis->setLabelColor(Qt::black);
+    customPlot->yAxis->grid()->setPen(QPen(QColor(130, 130, 130), 0, Qt::SolidLine));
+    customPlot->yAxis->grid()->setSubGridPen(QPen(QColor(130, 130, 130), 0, Qt::DotLine));
+
+    // Add data:
+    QVector<double> fossilData, nuclearData, regenData;
+    fossilData  << un <<deux  ;
+    regenData   << 0.06*10.5 << 0.05*5.5 << 0.04*5.5 << 0.06*5.8 << 0.02*5.2 << 0.07*4.2 << 0.25*11.2;
+    fossil->setData(ticks, fossilData);
+    // setup legend:
+    customPlot->legend->setVisible(true);
+    customPlot->axisRect()->insetLayout()->setInsetAlignment(0, Qt::AlignTop|Qt::AlignHCenter);
+    customPlot->legend->setBrush(QColor(255, 255, 255, 100));
+    customPlot->legend->setBorderPen(Qt::NoPen);
+    QFont legendFont = QFont();
+    legendFont.setPointSize(10);
+    customPlot->legend->setFont(legendFont);
+    customPlot->setInteractions(QCP::iRangeDrag | QCP::iRangeZoom);
+
+}

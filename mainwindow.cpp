@@ -13,6 +13,7 @@
 #include <QSqlQuery>
 #include <QDesktopServices>
 #include <QUrl>
+#include <qcustomplot.h>
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -134,4 +135,10 @@ void MainWindow::on_pushButton_12_clicked()
     c4.excel();
     QString ExcelFileName  = "C:/excel/Clients.csv";
     QDesktopServices::openUrl(QUrl(ExcelFileName, QUrl::TolerantMode));
+}
+void MainWindow::on_pushButton_3_clicked()
+{
+    ui->tab_clients_2->setCurrentIndex(3);
+       Clients c;
+       c.stat(ui->widget);
 }

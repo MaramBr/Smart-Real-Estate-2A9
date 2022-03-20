@@ -3,6 +3,8 @@
 #include <QString>
 #include <QDate>
 #include <QSqlQueryModel>
+#include <QVector>
+#include <qcustomplot.h>
 class Clients
 {
 public:
@@ -28,6 +30,8 @@ public:
     QSqlQueryModel*trierdecroissant();
     QSqlQueryModel*recherche(QString);
     bool excel();
+    void stat(QCustomPlot *customPlot);
+  //  QSqlQueryModel*historique();
 
 private:
     QString CIN;
