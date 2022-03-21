@@ -6,6 +6,10 @@
 #include<QApplication>
 #include <QString>
 #include <QSqlQueryModel>
+#include <QPdfWriter>
+#include <QPainter>
+#include <QDesktopServices>
+#include <QUrl>
 
 #include <QIntValidator>
  #include <QTableView>
@@ -41,6 +45,7 @@ void MainWindow::on_ajouter_clicked()
        int nb_chambres =ui->le_nbchambres->text().toInt();
        QString description_A =ui->le_description->text();
        int id_immeuble= ui->le_id2->text().toInt();
+
 
         Appartements A(id_appartement,prix,nb_chambres,description_A,id_immeuble);
         bool test=A.ajouter();
@@ -134,3 +139,46 @@ void MainWindow::on_pushButton_4_clicked()
 
 
 
+
+void MainWindow::on_pushButton_11_clicked()
+{
+
+    Appartements a4;
+    a4.pdf();
+    QString PdfFileName ="C:/pdf/a.pdf" ;
+    QDesktopServices::openUrl(QUrl(PdfFileName, QUrl::TolerantMode));
+         // QMessageBox::information(this, QObject::tr("PDF Enregistré!"),
+          //QObject::tr("PDF Enregistré!.\n" "Click Cancel to exit."), QMessageBox::Cancel);
+
+
+}
+
+void MainWindow::on_pushButton_9_clicked()
+{
+    QString filename = QFileDialog::getOpenFileName(this,tr("choose"),"",tr("Images(*.png *.jpg "));
+    if(QString::compare(filename,QString()) != 0)
+    {
+        QImage image;
+        bool valid=image.load(filename);
+        if(valid)
+        {
+            image=image.scaledToWidth(ui->le_image->width(), Qt::SmoothTransformation);
+            ui->le_image->setPixmap(QPixmap::fromImage(image));
+      }
+        else
+        {
+            //error handling
+        }
+        }
+
+    }
+
+
+void MainWindow::on_statistiques_clicked()
+{
+    ui->tab2->setCurrentIndex(3);
+      Appartements a;
+
+
+      a.stat(ui->widget);
+}

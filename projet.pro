@@ -19,12 +19,14 @@ SOURCES += \
     appartements.cpp \
     connexion.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    qcustomplot.cpp
 
 HEADERS += \
     appartements.h \
     connexion.h \
-    mainwindow.h
+    mainwindow.h \
+    qcustomplot.h
 
 FORMS += \
     dialog_ajout.ui \

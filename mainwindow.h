@@ -1,6 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 #include "appartements.h"
+#include <QFileDialog>
 
 #include <QMainWindow>
 
@@ -32,8 +33,14 @@ private slots:
 
     void on_pushButton_4_clicked();
 
+    void on_pushButton_11_clicked();
+
+    void on_pushButton_9_clicked();
+
+    void on_statistiques_clicked();
+
 private:
     Ui::MainWindow *ui;
-    Appartements a,a1,a2,a3;
+    Appartements a,a1,a2,a3,a4;
 };
 #endif // MAINWINDOW_H
