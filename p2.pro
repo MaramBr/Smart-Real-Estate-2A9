@@ -20,13 +20,15 @@ SOURCES += \
     contrat.cpp \
     main.cpp \
     mainwindow.cpp \
-    qrcodegen.cpp
+    qcustomplot.cpp \
+    qrcode.cpp
 
 HEADERS += \
+    QrCode.hpp \
     connexion.h \
     contrat.h \
     mainwindow.h \
-    qrcodegen.hpp
+    qcustomplot.h
 
 FORMS += \
     mainwindow.ui

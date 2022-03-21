@@ -14,12 +14,18 @@
 #include <QSqlError>
 #include <QDebug>
 
+using namespace qrcodegen;
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
 
     ui->setupUi(this);
+
+  // QTabBar *tabBar = ui->tab_contrat_2->findChild<QTabBar *>();
+   // tabBar->hide();
+
 ui->tab_contrat->setModel(c.afficher());
 ui->le_num->setValidator( new QRegExpValidator(QRegExp("[0-9]{1,4}")));
 ui->le_mode->setValidator( new QRegExpValidator(QRegExp("[a-z]{1,10}")));
@@ -187,43 +193,52 @@ c.createconnect();
     }
 }
 
-void MainWindow::on_QR_code_clicked()
+void MainWindow::on_CODEQR_clicked()
+{
+    int tabprod=ui->tab_contrat->currentIndex().row();
+    QVariant numcc=ui->tab_contrat->model()->data(ui->tab_contrat->model()->index(tabprod,0));
+    QString numc= numcc.toString();
+    QSqlQuery qry;
+    qry.prepare("select * from CONTRATS where numc=:numc");
+    qry.bindValue(":numc",numc);
+    qry.exec();
+   // QDate date_signification;
+    QString montant,typec,mode_paiement,cin;
+    while(qry.next()){
+        montant=qry.value(1).toString();
+        typec=qry.value(2).toString();
+        mode_paiement=qry.value(3).toString();
+       // cin==qry.value(4).toString();
+
+    }
+   // numcs=QString::number(numc);
+    numc="numc: "+montant+" montant: "+typec+" typec: "+mode_paiement+"mode_paiement: ";
+    QrCode qr = QrCode::encodeText(numc.toUtf8().constData(), QrCode::Ecc::HIGH);
+
+
+    QImage im(qr.getSize(),qr.getSize(), QImage::Format_RGB888);
+
+    for (int y = 0; y < qr.getSize(); y++) {
+        for (int x = 0; x < qr.getSize(); x++) {
+            int color = qr.getModule(x, y);  // 0 for white, 1 for black
+
+            // You need to modify this part
+            if(color==0)
+                im.setPixel(x, y,qRgb(254, 254, 254));
+            else
+                im.setPixel(x, y,qRgb(0, 0, 0));
+        }
+    }
+    im=im.scaled(200,200);
+    ui->qrlabel->setPixmap(QPixmap::fromImage(im));
+}
+
+void MainWindow::on_stattype_clicked()
 {
 
-    c.generateQr();
+    ui->tab_contrat_2->setCurrentIndex(3);
+    Contrat c;
 
-//    QString qr=ui->le_QR->text();
-//    if(qr=="1")
-//          {
-//              QPixmap pix("C:/Users/Aziz-PC/OneDrive/Bureau/school/2eme anne/projet c++/qr/1.png");
-//              int w = ui->label_pic_2->width();
-//              int h = ui->label_pic_2->height();
-//               ui->label_pic_2->setPixmap(pix.scaled(w,h,Qt::KeepAspectRatio));
+    c.stat(ui->widget);
 
-
-//          }
-//   else if(qr=="2")
-//          {
-//              QPixmap pix("C:/Users/Aziz-PC/OneDrive/Bureau/school/2eme anne/projet c++/qr/2.png");
-//              int w = ui->label_pic_2->width();
-//              int h = ui->label_pic_2->height();
-//               ui->label_pic_2->setPixmap(pix.scaled(w,h,Qt::KeepAspectRatio));
-
-
-//          }
-//   else if(qr=="3")
-//          {
-//              QPixmap pix("C:/Users/Aziz-PC/OneDrive/Bureau/school/2eme anne/projet c++/qr/3.png");
-//              int w = ui->label_pic_2->width();
-//              int h = ui->label_pic_2->height();
-//               ui->label_pic_2->setPixmap(pix.scaled(w,h,Qt::KeepAspectRatio));
-
-
-//          }
-//    else
-//    {
-//        QMessageBox msgBox;
-
-//               msgBox.setText("taper 1 ou 2 ou 3");
-//           msgBox.exec();
 }

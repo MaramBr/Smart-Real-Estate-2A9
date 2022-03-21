@@ -137,56 +137,111 @@ QSqlQueryModel * Contrat::recherche(QString numc)
     return model;
 }
 
-void Contrat::printQr(const QrCode &qr) {
-    int border = 4;
-    for (int y = -border; y < qr.getSize() + border; y++) {
-        for (int x = -border; x < qr.getSize() + border; x++) {
-            std::cout << (qr.getModule(x, y) ? "##" : "  ");
-        }
-        std::cout << std::endl;
-    }
-    std::cout << std::endl;
-}
 
 
-void Contrat::generateQr()
+void Contrat::stat(QCustomPlot *customPlot)
 {
-    const char *text = "Soyez les bienvenus chez smartlab!";
+    QSqlQuery query,query1;
+    // set dark background gradient:
+    QLinearGradient gradient(0, 0, 0, 400);
+    gradient.setColorAt(0, QColor(90, 90, 90));
+    gradient.setColorAt(0.38, QColor(105, 105, 105));
+    gradient.setColorAt(1, QColor(70, 70, 70));
+    customPlot->clearPlottables();
+    customPlot->clearGraphs();
+    customPlot->replot();
 
-    const QrCode::Ecc errCorLvl = QrCode::Ecc::LOW;  // Error correction level
+    customPlot->setBackground(QBrush(gradient));
 
-    // Make and print the QR Code symbol
-    const QrCode qr = QrCode::encodeText(text, errCorLvl);
-    printQr(qr);
-    std::cout << toSvgString(qr, 200);
-}
 
- std::string Contrat::toSvgString(const QrCode &qr, int border) {
-    if (border < 0)
-        throw std::domain_error("Border must be non-negative");
-    if (border > INT_MAX / 2 || border * 2 > INT_MAX - qr.getSize())
-        throw std::overflow_error("Border too large");
+    QCPBars *fossil = new QCPBars(customPlot->xAxis, customPlot->yAxis);
 
-    std::ostringstream sb;
-    sb << "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
-    sb << "<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\">\n";
-    sb << "<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\" viewBox=\"0 0 ";
-    sb << (qr.getSize() + border * 2) << " " << (qr.getSize() + border * 2) << "\" stroke=\"none\">\n";
-    sb << "\t<rect width=\"100%\" height=\"100%\" fill=\"#FFFFFF\"/>\n";
-    sb << "\t<path d=\"";
-    for (int y = 0; y < qr.getSize(); y++) {
-        for (int x = 0; x < qr.getSize(); x++) {
-            if (qr.getModule(x, y)) {
-                if (x != 0 || y != 0)
-                    sb << " ";
-                sb << "M" << (x + border) << "," << (y + border) << "h1v1h-1z";
-            }
-        }
+    fossil->setAntialiased(false);
+
+    fossil->setStackingGap(1);
+    // set names and colors:
+    fossil->setName("statistique selon le type");
+    fossil->setPen(QPen(QColor(111, 9, 176).lighter(170)));
+    fossil->setBrush(QColor(111, 9, 176));
+
+    QVector<double> ticks;
+    QVector<QString> labels;
+    query.prepare("SELECT COUNT(DISTINCT numc) FROM contrats where typec='location'");
+    query.exec();
+    int un;
+    while(query.next())
+    {
+        un=query.value(0).toInt();
+        qDebug()<<un;
     }
-    sb << "\" fill=\"#000000\"/>\n";
-    sb << "</svg>\n";
-    return sb.str();
+
+    query.prepare("SELECT COUNT(DISTINCT numc) FROM contrats where typec='vendre'");
+    query.exec();
+    int deux;
+    while(query.next())
+    {
+        deux=query.value(0).toInt();
+    }
+/*
+    query.prepare("SELECT COUNT(DISTINCT numc) FROM contrats where MONTANT between 10000 and 100000");
+    query.exec();
+    int trois;
+    while(query.next())
+    {
+        trois=query.value(0).toInt();
+    }
+
+*/
+
+
+
+    ticks << 1 << 2  ;
+    labels << "location" << "vendre"  ;
+    QSharedPointer<QCPAxisTickerText> textTicker(new QCPAxisTickerText);
+    textTicker->addTicks(ticks, labels);
+    customPlot->xAxis->setTicker(textTicker);
+    customPlot->xAxis->setTickLabelRotation(60);
+    customPlot->xAxis->setSubTicks(false);
+    customPlot->xAxis->setTickLength(0, 4);
+    customPlot->xAxis->setRange(0, 8);
+    customPlot->xAxis->setBasePen(QPen(Qt::white));
+    customPlot->xAxis->setTickPen(QPen(Qt::white));
+    customPlot->xAxis->grid()->setVisible(true);
+    customPlot->xAxis->grid()->setPen(QPen(QColor(130, 130, 130), 0, Qt::DotLine));
+    customPlot->xAxis->setTickLabelColor(Qt::white);
+    customPlot->xAxis->setLabelColor(Qt::green);
+
+    // prepare y axis:
+    customPlot->yAxis->setRange(0, 20);
+    customPlot->yAxis->setPadding(5); // a bit more space to the left border
+    customPlot->yAxis->setLabel("Nombre de contrats");
+    customPlot->yAxis->setBasePen(QPen(Qt::white));
+    customPlot->yAxis->setTickPen(QPen(Qt::white));
+    customPlot->yAxis->setSubTickPen(QPen(Qt::white));
+    customPlot->yAxis->grid()->setSubGridVisible(true);
+    customPlot->yAxis->setTickLabelColor(Qt::white);
+    customPlot->yAxis->setLabelColor(Qt::white);
+    customPlot->yAxis->grid()->setPen(QPen(QColor(130, 130, 130), 0, Qt::SolidLine));
+    customPlot->yAxis->grid()->setSubGridPen(QPen(QColor(130, 130, 130), 0, Qt::DotLine));
+
+    // Add data:
+    QVector<double> fossilData, nuclearData, regenData;
+    fossilData  << un <<deux  ;
+   // nuclearData << 0.08*10.5 << 0.12*5.5 << 0.12*5.5 << 0.40*5.8 << 0.09*5.2 << 0.00*4.2 << 0.07*11.2;
+    regenData   << 0.06*10.5 << 0.05*5.5 << 0.04*5.5 << 0.06*5.8 << 0.02*5.2 << 0.07*4.2 << 0.25*11.2;
+    fossil->setData(ticks, fossilData);
+  //  nuclear->setData(ticks, nuclearData);
+ //   regen->setData(ticks, regenData);
+
+    // setup legend:
+    customPlot->legend->setVisible(true);
+    customPlot->axisRect()->insetLayout()->setInsetAlignment(0, Qt::AlignTop|Qt::AlignHCenter);
+    customPlot->legend->setBrush(QColor(255, 255, 255, 100));
+    customPlot->legend->setBorderPen(Qt::NoPen);
+    QFont legendFont = QFont();
+    legendFont.setPointSize(10);
+    customPlot->legend->setFont(legendFont);
+    customPlot->setInteractions(QCP::iRangeDrag | QCP::iRangeZoom);
+
 }
-
-
 

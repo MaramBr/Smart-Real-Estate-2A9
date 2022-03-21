@@ -2,6 +2,8 @@
 #define MAINWINDOW_H
 #include "contrat.h"
 #include <QMainWindow>
+#include "QrCode.hpp"
+
 #include <vector>
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -36,6 +38,10 @@ private slots:
     void on_tab_contrat_activated(const QModelIndex &index);
 
     void on_QR_code_clicked();
+
+    void on_CODEQR_clicked();
+
+    void on_stattype_clicked();
 
 private:
     Ui::MainWindow *ui;

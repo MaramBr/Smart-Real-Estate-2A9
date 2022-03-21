@@ -4,13 +4,8 @@
 #include <QSqlQueryModel>
 #include <QDate>
 #include <QTableView>
+#include <qcustomplot.h>
 
-
-
-#include "qrcodegen.hpp"
-using qrcodegen::QrCode;
-using qrcodegen::QrSegment;
-using namespace std;
 
 
 
@@ -39,10 +34,7 @@ public:
     QSqlQueryModel * recherche(QString numc);
 bool display();
     bool supprimer(QString);
-
-    void generateQr();
-    void printQr(const QrCode &qr);
-    std::string toSvgString(const QrCode &qr, int border);
+    void stat(QCustomPlot *customPlot);
 
 private:
     QString numc;
