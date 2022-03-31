@@ -35,6 +35,7 @@ public:
 bool display();
     bool supprimer(QString);
     void stat(QCustomPlot *customPlot);
+    double calucul();
 
 private:
     QString numc;

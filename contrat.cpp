@@ -144,9 +144,9 @@ void Contrat::stat(QCustomPlot *customPlot)
     QSqlQuery query,query1;
     // set dark background gradient:
     QLinearGradient gradient(0, 0, 0, 400);
-    gradient.setColorAt(0, QColor(90, 90, 90));
-    gradient.setColorAt(0.38, QColor(105, 105, 105));
-    gradient.setColorAt(1, QColor(70, 70, 70));
+    gradient.setColorAt(0, QColor(156, 212, 114));
+    gradient.setColorAt(0.38, QColor(191, 234, 170));
+    gradient.setColorAt(1, QColor(212, 236, 201));
     customPlot->clearPlottables();
     customPlot->clearGraphs();
     customPlot->replot();
@@ -161,8 +161,8 @@ void Contrat::stat(QCustomPlot *customPlot)
     fossil->setStackingGap(1);
     // set names and colors:
     fossil->setName("statistique selon le type");
-    fossil->setPen(QPen(QColor(111, 9, 176).lighter(170)));
-    fossil->setBrush(QColor(111, 9, 176));
+    fossil->setPen(QPen(QColor(125,198, 209).lighter(170)));
+    fossil->setBrush(QColor(125,198, 209));
 
     QVector<double> ticks;
     QVector<QString> labels;
@@ -204,23 +204,23 @@ void Contrat::stat(QCustomPlot *customPlot)
     customPlot->xAxis->setSubTicks(false);
     customPlot->xAxis->setTickLength(0, 4);
     customPlot->xAxis->setRange(0, 8);
-    customPlot->xAxis->setBasePen(QPen(Qt::white));
+    customPlot->xAxis->setBasePen(QPen(Qt::black));
     customPlot->xAxis->setTickPen(QPen(Qt::white));
     customPlot->xAxis->grid()->setVisible(true);
     customPlot->xAxis->grid()->setPen(QPen(QColor(130, 130, 130), 0, Qt::DotLine));
-    customPlot->xAxis->setTickLabelColor(Qt::white);
+    customPlot->xAxis->setTickLabelColor(Qt::black);
     customPlot->xAxis->setLabelColor(Qt::green);
 
     // prepare y axis:
     customPlot->yAxis->setRange(0, 20);
     customPlot->yAxis->setPadding(5); // a bit more space to the left border
     customPlot->yAxis->setLabel("Nombre de contrats");
-    customPlot->yAxis->setBasePen(QPen(Qt::white));
-    customPlot->yAxis->setTickPen(QPen(Qt::white));
-    customPlot->yAxis->setSubTickPen(QPen(Qt::white));
+    customPlot->yAxis->setBasePen(QPen(Qt::black));
+    customPlot->yAxis->setTickPen(QPen(Qt::black));
+    customPlot->yAxis->setSubTickPen(QPen(Qt::black));
     customPlot->yAxis->grid()->setSubGridVisible(true);
-    customPlot->yAxis->setTickLabelColor(Qt::white);
-    customPlot->yAxis->setLabelColor(Qt::white);
+    customPlot->yAxis->setTickLabelColor(Qt::black);
+    customPlot->yAxis->setLabelColor(Qt::black);
     customPlot->yAxis->grid()->setPen(QPen(QColor(130, 130, 130), 0, Qt::SolidLine));
     customPlot->yAxis->grid()->setSubGridPen(QPen(QColor(130, 130, 130), 0, Qt::DotLine));
 
@@ -243,5 +243,24 @@ void Contrat::stat(QCustomPlot *customPlot)
     customPlot->legend->setFont(legendFont);
     customPlot->setInteractions(QCP::iRangeDrag | QCP::iRangeZoom);
 
+}
+
+double Contrat::calucul_revenu()
+{
+
+        QSqlQuery query;
+        query.prepare("SELECT montant FROM contrats");
+
+        double somme=0;
+        if(query.exec())
+        {
+            while(query.next())
+            {
+                double montant = query.value(0).toString().toInt();//Récupère le résultat de la requête
+                 somme=somme+montant;
+
+            }
+        }
+        return somme;
 }
 

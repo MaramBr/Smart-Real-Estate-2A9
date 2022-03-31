@@ -13,6 +13,7 @@
 #include <QSqlQuery>
 #include <QSqlError>
 #include <QDebug>
+#include <calcul.h>
 
 using namespace qrcodegen;
 
@@ -240,5 +241,16 @@ void MainWindow::on_stattype_clicked()
     Contrat c;
 
     c.stat(ui->widget);
+
+}
+
+void MainWindow::on_calcul_clicked()
+{
+    QString val = QString::number(c.calucul_revenu());
+    ui->le_montant->setText(val);
+
+   // hide();
+   // calcul c;
+   // c.exec();
 
 }
