@@ -3,15 +3,33 @@
 #include "rdv.h"
 #include <QMessageBox>
 #include <QDate>
+#include <QIntValidator>
+#include <QPainter>
+#include <QtCharts>
+#include <QPieSlice>
+#include <QPieSeries>
+#include <QRegExpValidator>
+#define EMAIL_RX "^[_a-z0-9-]+(\\.[_a-z0-9-]+)*@[a-z0-9-]+" \
+                 "(\\.[a-z0-9-]+)*(\\.[a-z]{2,4})$"
+
+
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    ui->lineEdit_num->setValidator(new QIntValidator (0,9999,this)) ;
+    //ui->emaill->setValidator(new QRegExpValidator(QRegExp("[a-z]{1,10}@[a-z]{1,10}\\.[a-z]{1,10}")));
+    //QRegExp rxEmail(EMAIL_RX);
+        //QRegExpValidator *valiEmail = new QRegExpValidator(rxEmail, this);
+       // ui->email->setValidator(valiEmail);
+   // ui->->setValidator(new QIntValidator (0,9999,this)) ;
+
     ui->tableView->setModel(Et.afficher());
 }
 
+//
 MainWindow::~MainWindow()
 {
     delete ui;
@@ -23,13 +41,15 @@ void MainWindow::on_pushButton_clicked()
     int NUM_RDV = ui->lineEdit_num->text().toInt();
     QDate DATE_RDV = ui->dateEdit->date();
     QString type;
+    QString EMAIL= ui->emaill->text();
+
 if (ui->radioButton->isChecked())
 { type="location" ; }
 if (ui->radioButton_vente->isChecked())
 { type="vente" ; }
 
 
-    rdv R (NUM_RDV, DATE_RDV,type);
+    rdv R (NUM_RDV,DATE_RDV,type,EMAIL);
     bool test = R.ajouter();
 
     if (test){
@@ -72,11 +92,12 @@ void MainWindow::on_pushButton_2_clicked()
     int NUM_RDV = ui->lineEdit_num->text().toInt();
     QDate DATE_RDV = ui->dateEdit->date();
     QString type;
+    QString EMAIL=ui->emaill->text();
 if (ui->radioButton->isChecked())
 { type="location" ; }
 if (ui->radioButton_vente->isChecked())
 { type="vente" ; }
-    rdv R2(NUM_RDV, DATE_RDV,type);
+    rdv R2(NUM_RDV, DATE_RDV,type,EMAIL);
     bool test = R2.modifier();
     if (test){
         ui->tableView->setModel(Et.afficher());
@@ -90,4 +111,78 @@ if (ui->radioButton_vente->isChecked())
                               QMessageBox::Cancel
                               );
     }
+}
+
+
+
+void MainWindow::on_pb_tricroi_clicked()
+{
+    ui->tableView->setModel(Et.tricroi());
+
+}
+
+
+void MainWindow::on_pb_tridecroi_clicked()
+{
+    ui->tableView->setModel(Et.tridecroi());
+
+}
+
+
+
+
+
+void MainWindow::on_pushButton_4_clicked()
+{
+    QSqlQueryModel * model= new QSqlQueryModel();
+                     model->setQuery("select * from RDV where NUM_RDV < 10 ");
+                     float NUM_RDV1=model->rowCount();
+                     model->setQuery("select * from RDV where NUM_RDV  between 10 and 20 ");
+                     float NUM_RDV2=model->rowCount();
+                     model->setQuery("select * from RDV where NUM_RDV >20 ");
+                     float NUM_RDV3=model->rowCount();
+                     float total=NUM_RDV1+NUM_RDV2+NUM_RDV3;
+                     QString a=QString("inferieur a 10  "+QString::number((NUM_RDV1*100)/total,'f',2)+"%" );
+                     QString b=QString("entre 10 et 20  "+QString::number((NUM_RDV2*100)/total,'f',2)+"%" );
+                     QString c=QString("+20  "+QString::number((NUM_RDV3*100)/total,'f',2)+"%" );
+                     QPieSeries *series = new QPieSeries();
+                     series->append(a,NUM_RDV1);
+                     series->append(b,NUM_RDV2);
+                     series->append(c,NUM_RDV3);
+             if (NUM_RDV1!=0)
+             {QPieSlice *slice = series->slices().at(0);
+              slice->setLabelVisible();
+              slice->setPen(QPen());}
+             if ( NUM_RDV2!=0)
+             {
+                      // Add label, explode and define brush for 2nd slice
+                      QPieSlice *slice1 = series->slices().at(1);
+                      //slice1->setExploded();
+                      slice1->setLabelVisible();
+             }
+             if(NUM_RDV3!=0)
+             {
+                      // Add labels to rest of slices
+                      QPieSlice *slice2 = series->slices().at(2);
+                      //slice1->setExploded();
+                      slice2->setLabelVisible();
+             }
+                     // Create the chart widget
+                     QChart *chart = new QChart();
+                     // Add data to chart with title and hide legend
+                     chart->addSeries(series);
+                     chart->setTitle("Pourcentage Par num :Numero rendez-vous "+ QString::number(total));
+                     chart->legend()->hide();
+                     // Used to display the chart
+                     QChartView *chartView = new QChartView(chart);
+                     chartView->setRenderHint(QPainter::Antialiasing);
+                     chartView->resize(1000,500);
+                     chartView->show();
+}
+
+void MainWindow::on_line_edit_Recherche_textChanged()
+{
+    QString rech=ui->line_edit_Recherche->text();
+    ui->tableView->setModel(R.Rechercherdv(rech));
+
 }

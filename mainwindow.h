@@ -19,13 +19,21 @@ private slots:
     void on_pushButton_clicked();
     void on_pushButton_Supprimer_clicked();
     void on_pushButton_2_clicked();
-    void on_line_edit_Recherche_textChanged();
 
+    void on_pb_tricroi_clicked();
+
+    void on_pb_tridecroi_clicked();
+
+    void on_pushButton_4_clicked();
+
+    void on_line_edit_Recherche_textChanged();
 
 private:
     Ui::MainWindow *ui;
-   rdv Et, Etu;
+   rdv Et, Etu,R;
 };
+
+
 #endif // MAINWINDOW_H
 
 

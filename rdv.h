@@ -10,9 +10,10 @@ class rdv
     QString TYPE ;
     QDate DATE_RDV ;
     int NUM_RDV;
+    QString EMAIL;
 public:
     rdv();
-    rdv(int, QDate,QString);
+    rdv(int, QDate,QString,QString);
 
     //Getters
     int getNumRdv(){
@@ -21,7 +22,12 @@ public:
     QDate getDate(){
         return DATE_RDV;
     }
-
+    QString getTYPE(){
+        return TYPE;
+    }
+    QString getEMAIL(){
+        return EMAIL;
+    }
     //Setters
     void setNumRdv(int n){
         NUM_RDV=n;
@@ -29,11 +35,20 @@ public:
     void setDate(QDate n){
         DATE_RDV=n;
     }
+    void setTYPE(QString n){
+        TYPE=n;
+    } void setEmail(QString n){
+       EMAIL=n;
+    }
 
     bool ajouter();
     QSqlQueryModel * afficher();
     bool supprimer(int);
     bool modifier();
+    QSqlQueryModel* Rechercherdv(QString);
+    //QSqlQueryModel * rechercher(QString);
+    QSqlQueryModel * tricroi();
+     QSqlQueryModel * tridecroi();
 };
 
 
