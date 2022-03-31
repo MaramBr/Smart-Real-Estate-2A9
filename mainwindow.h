@@ -19,6 +19,8 @@ private slots:
     void on_pushButton_clicked();
     void on_pushButton_Supprimer_clicked();
     void on_pushButton_2_clicked();
+    void on_line_edit_Recherche_textChanged();
+
 
 private:
     Ui::MainWindow *ui;
