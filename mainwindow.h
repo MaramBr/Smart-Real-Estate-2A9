@@ -20,16 +20,10 @@ private slots:
     void on_pushButton_Supprimer_clicked();
     void on_pushButton_2_clicked();
 
-    void on_pb_tricroi_clicked();
-
-    void on_pb_tridecroi_clicked();
-
 private:
     Ui::MainWindow *ui;
    rdv Et, Etu;
 };
-
-
 #endif // MAINWINDOW_H
 
 

@@ -3,17 +3,12 @@
 #include "rdv.h"
 #include <QMessageBox>
 #include <QDate>
-#include <QIntValidator>
-#include <QRegExpValidator>
-
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    ui->lineEdit_num->setValidator(new QIntValidator (0,9999,this)) ;
-
     ui->tableView->setModel(Et.afficher());
 }
 
@@ -28,7 +23,6 @@ void MainWindow::on_pushButton_clicked()
     int NUM_RDV = ui->lineEdit_num->text().toInt();
     QDate DATE_RDV = ui->dateEdit->date();
     QString type;
-
 if (ui->radioButton->isChecked())
 { type="location" ; }
 if (ui->radioButton_vente->isChecked())
@@ -96,19 +90,4 @@ if (ui->radioButton_vente->isChecked())
                               QMessageBox::Cancel
                               );
     }
-}
-
-
-
-void MainWindow::on_pb_tricroi_clicked()
-{
-    ui->tableView->setModel(Et.tricroi());
-
-}
-
-
-void MainWindow::on_pb_tridecroi_clicked()
-{
-    ui->tableView->setModel(Et.tridecroi());
-
 }

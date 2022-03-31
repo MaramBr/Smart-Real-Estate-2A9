@@ -6,7 +6,6 @@
 #include <QDate>
 class rdv
 {
-
 //private:
     QString TYPE ;
     QDate DATE_RDV ;
@@ -22,9 +21,6 @@ public:
     QDate getDate(){
         return DATE_RDV;
     }
-    QString getTYPE(){
-        return TYPE;
-    }
 
     //Setters
     void setNumRdv(int n){
@@ -33,17 +29,11 @@ public:
     void setDate(QDate n){
         DATE_RDV=n;
     }
-    void setTYPE(QString n){
-        TYPE=n;
-    }
 
     bool ajouter();
     QSqlQueryModel * afficher();
     bool supprimer(int);
     bool modifier();
-    QSqlQueryModel * rechercher(QString);
-    QSqlQueryModel * tricroi();
-     QSqlQueryModel * tridecroi();
 };
 
 

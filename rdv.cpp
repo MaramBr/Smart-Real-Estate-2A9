@@ -10,7 +10,6 @@ rdv::rdv(int NUM_RDV, QDate DATE_RDV ,QString TYPE){
     this->NUM_RDV=NUM_RDV;
     this->DATE_RDV=DATE_RDV;
     this->TYPE=TYPE;
-
 }
 bool rdv::ajouter(){
     QSqlQuery query;
@@ -20,7 +19,6 @@ bool rdv::ajouter(){
     query.bindValue(":DATE_RDV", DATE_RDV);
     query.bindValue(":TYPE",TYPE);
 
-
     return query.exec();
 }
 QSqlQueryModel * rdv::afficher(){
@@ -28,8 +26,7 @@ QSqlQueryModel * rdv::afficher(){
     model->setQuery("select * from RDV");
     model->setHeaderData(0,Qt::Horizontal, QObject::tr("NUM_RDV"));
     model->setHeaderData(1,Qt::Horizontal, QObject::tr("DATE_RDV"));
-    model->setHeaderData(2,Qt::Horizontal, QObject::tr("type"));
-
+    model->setHeaderData(3,Qt::Horizontal, QObject::tr("type"));
     return model;
 }
 bool rdv::supprimer(int NUM_RDV){
@@ -47,37 +44,5 @@ bool rdv::modifier(){
     query.bindValue(":DATE_RDV", DATE_RDV);
     query.bindValue(":TYPE",TYPE);
 
-
     return query.exec();
 }
-
- QSqlQueryModel* rdv:: rechercher(QString TYPE){
-   QSqlQueryModel* model = new QSqlQueryModel();
-   QString search = "%"+TYPE+"%";
-    model->setQuery("SELECT * FROM RDV WHERE num like '"+search+"'");
-    model->setHeaderData(0,Qt::Horizontal,QObject::tr("TYPE"));
-    return model ;
-}
-
-
-QSqlQueryModel * rdv::tricroi()
-{
-    QSqlQueryModel *model=new QSqlQueryModel();
-    model->setQuery("select * from RDV order by NUM_RDV "  );
-    model->setHeaderData(0,Qt::Horizontal,QObject::tr("NUM_RDV"));
-    model->setHeaderData(1,Qt::Horizontal,QObject::tr("DATE_RDV"));
-    model->setHeaderData(2,Qt::Horizontal,QObject::tr("TYPE"));
-    return model;
-
-}
-QSqlQueryModel * rdv::tridecroi()
-{
-    QSqlQueryModel *model=new QSqlQueryModel();
-    model->setQuery("select * from RDV order by NUM_RDV desc "  );
-    model->setHeaderData(0,Qt::Horizontal,QObject::tr("NUM_RDV"));
-    model->setHeaderData(1,Qt::Horizontal,QObject::tr("DATE_RDV"));
-    model->setHeaderData(2,Qt::Horizontal,QObject::tr("TYPE"));
-    return model;
-
-}
-
