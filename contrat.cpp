@@ -245,7 +245,7 @@ void Contrat::stat(QCustomPlot *customPlot)
 
 }
 
-double Contrat::calucul_revenu()
+double Contrat::calucul()
 {
 
         QSqlQuery query;

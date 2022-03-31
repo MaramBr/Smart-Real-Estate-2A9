@@ -43,6 +43,8 @@ private slots:
 
     void on_stattype_clicked();
 
+    void on_calcul_clicked();
+
 private:
     Ui::MainWindow *ui;
      Contrat c,C1,c2,c3;
