@@ -91,3 +91,10 @@ if (ui->radioButton_vente->isChecked())
                               );
     }
 }
+
+void MainWindow::on_line_edit_Recherche_textChanged()
+{
+    QString rech=ui->line_edit_Recherche->text();
+    ui->tableView->setModel(R.Rechercherdv(rech));
+
+}
