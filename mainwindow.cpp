@@ -14,19 +14,25 @@
 #include <QDesktopServices>
 #include <QUrl>
 #include <qcustomplot.h>
+#include <iostream>
+using namespace std;
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
     ui->tab_clients->setModel(c.afficher());
-    ui->le_cin->setValidator( new QRegExpValidator (QRegExp("[1-9]{1,8}")));
+    ui->le_cin->setValidator( new QRegExpValidator (QRegExp("[0-9]{1,8}")));
     ui->le_nom->setValidator( new QRegExpValidator (QRegExp("[a-z]{1,10}")));
     ui->le_prenom->setValidator( new QRegExpValidator (QRegExp("[a-z]{1,10}")));
     ui->le_num->setValidator( new QRegExpValidator (QRegExp("[0-9]{1,8}")));
     ui->le_type->setValidator( new QRegExpValidator (QRegExp("[a-z]{1,15}")));
-    ui->cin_sup->setValidator( new QRegExpValidator (QRegExp("[1-9]{1,8}")));
-    ui->cin_rech->setValidator( new QRegExpValidator (QRegExp("[1-9]{1,8}")));
+    ui->cin_sup->setValidator( new QRegExpValidator (QRegExp("[0-9]{1,8}")));
+    ui->cin_rech->setValidator( new QRegExpValidator (QRegExp("[0-9]{1,8}")));
+    QString current_date=QDateTime::currentDateTime().toString("dd.MM.yyyy");
+    QDate current_qdate(current_date.right(4).toInt(),current_date.mid(3,2).toInt(),current_date.left(2).toInt());
+    ui->choixdate->setDate(current_qdate);
+
 }
 MainWindow::~MainWindow()
 {
@@ -39,24 +45,27 @@ void MainWindow::on_ajouter_clicked()
     QString prenom= ui->le_prenom->text();
     QString num_tel =ui->le_num->text();
     QString type =ui->le_type->text();
-    QDate date_ajout =ui->le_date->date();
+    QString date=QDateTime::currentDateTime().toString("dd.MM.yyyy");
+    QDate date_ajout(date.right(4).toInt(),date.mid(3,2).toInt(),date.left(2).toInt());
+   // cout<<" year "<<date.right(4).toStdString()<<" month "<<date.mid(3,2).toStdString()<<" day "<< date.left(2).toStdString()<<endl;
+    //cout<<"ytf"<<date_ajout.toString().toStdString()<<endl;
     Clients C(CIN,nom,prenom,num_tel,type,date_ajout);
-   bool test=C.ajouter();
-if (test)
-{
-    ui->tab_clients->setModel(C.afficher());
-    QMessageBox::information(nullptr, QObject::tr("ok"),
-                             QObject::tr("ajout effectuer  .\n"
-                                         "Click Cancel to exit."), QMessageBox::Cancel);
+    bool test=C.ajouter();
+    if (test)
+    {
+        ui->tab_clients->setModel(C.afficher());
+        QMessageBox::information(nullptr, QObject::tr("ok"),
+                                 QObject::tr("ajout effectuer  .\n"
+                                             "Click Cancel to exit."), QMessageBox::Cancel);
 
-   }
-   else
-   {
+       }
+       else
+       {
 
-    QMessageBox::critical(nullptr, QObject::tr("not ok"),
-                QObject::tr("ajout non effectuer .\n"
-                            "Click Cancel to exit."), QMessageBox::Cancel);
-}
+        QMessageBox::critical(nullptr, QObject::tr("not ok"),
+                    QObject::tr("ajout non effectuer .\n"
+                                "Click Cancel to exit."), QMessageBox::Cancel);
+    }
 }
 
 void MainWindow::on_supprimer_clicked()
@@ -85,9 +94,9 @@ void MainWindow::on_modifier_clicked()
         c2.setprenom(ui->le_prenom->text());
         c2.setnum(ui->le_num->text());
         c2.settype(ui->le_type->text());
-        c2.setdate(  ui->le_date->date());
+      //  c2.setdate(  ui->le_date->date());
 
-       bool test=c2.modifier(c2.getcin(),c2.getnom(),c2.getprenom(),c2.getnum(),c2.gettype(),c2.getdate());
+       bool test=c2.modifier(c2.getcin(),c2.getnom(),c2.getprenom(),c2.getnum(),c2.gettype());
     if (test)
     {
         ui->tab_clients->setModel(c2.afficher());
@@ -141,4 +150,12 @@ void MainWindow::on_pushButton_3_clicked()
     ui->tab_clients_2->setCurrentIndex(3);
        Clients c;
        c.stat(ui->widget);
+}
+void MainWindow::on_historique_clicked()
+{
+    QString date=ui->choixdate->text();
+    Clients c3;
+    c3.save_historique(date);
+    QString lien  = "file:///C:/historique/histo.txt";
+    QDesktopServices::openUrl(QUrl(lien, QUrl::TolerantMode));
 }

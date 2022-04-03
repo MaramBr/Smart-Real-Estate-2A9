@@ -34,7 +34,7 @@
 background-color: rgb(255, 255, 255);</string>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -95,7 +95,7 @@ background-color: rgb(255, 255, 255);</string>
        <property name="geometry">
         <rect>
          <x>30</x>
-         <y>150</y>
+         <y>160</y>
          <width>121</width>
          <height>16</height>
         </rect>
@@ -108,7 +108,7 @@ background-color: rgb(255, 255, 255);</string>
        <property name="geometry">
         <rect>
          <x>30</x>
-         <y>190</y>
+         <y>210</y>
          <width>56</width>
          <height>16</height>
         </rect>
@@ -151,7 +151,7 @@ background-color: rgb(255, 255, 255);</string>
        <property name="geometry">
         <rect>
          <x>170</x>
-         <y>150</y>
+         <y>160</y>
          <width>113</width>
          <height>22</height>
         </rect>
@@ -161,32 +161,9 @@ background-color: rgb(255, 255, 255);</string>
        <property name="geometry">
         <rect>
          <x>170</x>
-         <y>190</y>
+         <y>210</y>
          <width>113</width>
          <height>22</height>
-        </rect>
-       </property>
-      </widget>
-      <widget class="QLabel" name="label_6">
-       <property name="geometry">
-        <rect>
-         <x>30</x>
-         <y>220</y>
-         <width>101</width>
-         <height>21</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Date d'ajout</string>
-       </property>
-      </widget>
-      <widget class="QDateEdit" name="le_date">
-       <property name="geometry">
-        <rect>
-         <x>170</x>
-         <y>220</y>
-         <width>110</width>
-         <height>21</height>
         </rect>
        </property>
       </widget>
@@ -220,14 +197,69 @@ background-color: rgb(255, 255, 255);</string>
      <widget class="QPushButton" name="quitter">
       <property name="geometry">
        <rect>
-        <x>470</x>
-        <y>530</y>
-        <width>181</width>
-        <height>41</height>
+        <x>320</x>
+        <y>510</y>
+        <width>211</width>
+        <height>51</height>
        </rect>
       </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton {
+
+padding: 1px;
+
+border-style: solid;
+
+border: 2px solid gray;
+
+border-radius: 8px;
+
+background-color: rgb(143, 143, 143);
+
+border:2px solid #000;
+
+}
+
+QPushButton {
+
+color: #fff !important;
+
+text-transform: uppercase;
+
+text-decoration: none;
+
+background: #7dc6d1;
+
+padding: 20px;
+
+border-radius: 5px;
+
+display: inline-block;
+
+border: none;
+
+transition: all 0.4s ease 0s;
+
+}
+
+QPushButton:hover {
+
+background: #434343;
+
+letter-spacing: 1px;
+
+-webkit-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+
+-moz-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+
+box-shadow: 5px 40px -10px rgba(0,0,0,0.57);
+
+transition: all 0.4s ease 0s;
+
+}</string>
+      </property>
       <property name="text">
-       <string>Quitter</string>
+       <string>quitter</string>
       </property>
      </widget>
      <widget class="QGroupBox" name="groupBox_9">
@@ -406,7 +438,7 @@ background-color: rgb(255, 255, 255);</string>
      <widget class="QGroupBox" name="groupBox_4">
       <property name="geometry">
        <rect>
-        <x>810</x>
+        <x>610</x>
         <y>460</y>
         <width>301</width>
         <height>101</height>
@@ -437,19 +469,36 @@ background-color: rgb(255, 255, 255);</string>
          <height>31</height>
         </rect>
        </property>
+       <property name="dateTime">
+        <datetime>
+         <hour>0</hour>
+         <minute>0</minute>
+         <second>0</second>
+         <year>2000</year>
+         <month>1</month>
+         <day>1</day>
+        </datetime>
+       </property>
+       <property name="minimumDate">
+        <date>
+         <year>1752</year>
+         <month>9</month>
+         <day>15</day>
+        </date>
+       </property>
       </widget>
      </widget>
-     <widget class="QPushButton" name="pushButton_14">
+     <widget class="QPushButton" name="historique">
       <property name="geometry">
        <rect>
-        <x>1140</x>
+        <x>980</x>
         <y>500</y>
         <width>121</width>
         <height>31</height>
        </rect>
       </property>
       <property name="text">
-       <string>Valider</string>
+       <string>Historique</string>
       </property>
      </widget>
      <widget class="QPushButton" name="pushButton">
@@ -509,8 +558,59 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'MS Shell Dlg 2';&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
        <property name="styleSheet">
-        <string notr="true">background-color: rgb(125, 198, 209);
-</string>
+        <string notr="true">QPushButton {
+
+padding: 1px;
+
+border-style: solid;
+
+border: 2px solid gray;
+
+border-radius: 8px;
+
+background-color: rgb(143, 143, 143);
+
+border:2px solid #000;
+
+}
+
+QPushButton {
+
+color: #fff !important;
+
+text-transform: uppercase;
+
+text-decoration: none;
+
+background: #7dc6d1;
+
+padding: 20px;
+
+border-radius: 5px;
+
+display: inline-block;
+
+border: none;
+
+transition: all 0.4s ease 0s;
+
+}
+
+QPushButton:hover {
+
+background: #434343;
+
+letter-spacing: 1px;
+
+-webkit-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+
+-moz-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+
+box-shadow: 5px 40px -10px rgba(0,0,0,0.57);
+
+transition: all 0.4s ease 0s;
+
+}</string>
        </property>
        <property name="text">
         <string>statistique</string>

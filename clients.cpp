@@ -10,6 +10,7 @@
 #include <iostream>
 #include <string>
 
+using namespace std;
 
 Clients::Clients()
 {
@@ -94,18 +95,18 @@ bool Clients:: ajouter()
 
         return query.exec();
 }
-bool Clients::modifier(QString CIN, QString nom, QString prenom, QString num_tel, QString type, QDate date_ajout)
+bool Clients::modifier(QString CIN, QString nom, QString prenom, QString num_tel, QString type)
 {
 
     QSqlQuery query;
-       query.prepare("update clients set CIN=:CIN,nom=:nom,prenom=:prenom,num_tel=:num_tel,type=:type,date_ajout=:date_ajout where CIN=:CIN");
+       query.prepare("update clients set CIN=:CIN,nom=:nom,prenom=:prenom,num_tel=:num_tel,type=:type where CIN=:CIN");
 
        query.bindValue(":CIN",CIN);
        query.bindValue(":nom",nom);
        query.bindValue(":prenom",prenom);
        query.bindValue(":num_tel",num_tel);
        query.bindValue(":type",type);
-       query.bindValue(":date_ajout",date_ajout);
+     //  query.bindValue(":date_ajout",date_ajout);
 
        return query.exec();
 
@@ -285,3 +286,73 @@ void Clients::stat(QCustomPlot *customPlot)
     customPlot->setInteractions(QCP::iRangeDrag | QCP::iRangeZoom);
 
 }
+/*QSqlQueryModel*Clients::historique(QDate date_ajout)
+{
+    QDate rech=date_ajout;
+    QSqlQueryModel* model =new QSqlQueryModel();
+    QSqlQuery query;
+  //  model->setQuery("select * from clients where date_ajout =:date_ajout");
+    query.prepare("select * from clients where date_ajout =:date_ajout ");
+    query.bindValue(":date_ajout",rech);
+
+return model;
+}*/
+ void Clients::save_historique(QString selected_date)
+ {
+
+     QSqlQuery q("select * from clients order by date_ajout");
+       QSqlRecord rec = q.record();
+
+        QFile fichier("C:/historique/histo.txt");
+
+       if(fichier.open(QIODevice::WriteOnly | QIODevice::Text))
+       {
+           QTextStream stream(&fichier);
+
+       int cinCol = rec.indexOf("CIN");
+       int nomCol = rec.indexOf("nom");
+       int prenomCol = rec.indexOf("prenom");
+       int numCol = rec.indexOf("num_tel");
+       int typecol = rec.indexOf("type");
+       int datecol = rec.indexOf("date_ajout");
+
+         //std::cout << "cinCol " << cinCol << std::endl;
+         //std::cout << "nomCol " << nomCol << std::endl;
+
+      // stream << "CIN" << ";" << "nom" << ";" << "prenom" << ";" << "num_tel" << ";" << "type"<< ";" << "date_ajout" <<  "\n";
+           QDate date_pred;
+           bool first = true;
+           QDate selected_qdate(selected_date.right(4).toInt(),selected_date.mid(3,2).toInt(),selected_date.left(2).toInt());
+                cout <<" hgv "<<selected_date.toStdString()<<endl;
+                     cout <<" hgv "<<selected_qdate.toString().toStdString()<<endl;
+           while (q.next()) {
+               QString date=q.value(datecol).toString().left(10);
+               QDate date_ajout(date.left(4).toInt(),date.mid(5,2).toInt(),date.right(2).toInt());
+               if (selected_qdate>=date_ajout){
+                   if ((first) || (date_pred!=date_ajout)) {
+                       if(!first) stream << endl;
+                       stream << "-----------------------------------" << endl;
+                       stream << date_ajout.toString("dd/MM/yyyy") << endl;
+                       stream << "-----------------------------------" << endl;
+                       if (first) first=false;
+                       date_pred=date_ajout;
+                   }
+                   stream << "    CIN: " << q.value(cinCol).toString() << endl;
+                   stream << "    Nom: " << q.value(nomCol).toString() << endl;
+                   stream << "    Prenom: " << q.value(prenomCol).toString() << endl;
+                   stream << "    Num_Tel: " << q.value(numCol).toString()<< endl;
+                   stream << "    Type: " << q.value(typecol).toString()<< endl;
+
+                  // cout<<" year "<<date.left(4).toStdString()<<" month "<<date.mid(5,2).toStdString()<<" day "<< date.right(2).toStdString()<<endl;
+                   //stream << "Date: " << date_ajout.toString("dd/MM/yyyy") << endl;
+                  // stream << "Date: " << q.value(datecol).toString() << endl;
+                   stream << endl;
+              }
+           }
+        fichier.close();
+
+         } else {
+           qDebug()<<"erreur";
+         }
+ }
+

@@ -23,7 +23,7 @@ public:
     void settype(QString);
     void setdate(QDate);
     bool ajouter();
-    bool modifier(QString,QString,QString,QString,QString,QDate);
+    bool modifier(QString,QString,QString,QString,QString);
     QSqlQueryModel*afficher();
     bool supprimer(QString);
     QSqlQueryModel*triercroissant();
@@ -31,8 +31,7 @@ public:
     QSqlQueryModel*recherche(QString);
     bool excel();
     void stat(QCustomPlot *customPlot);
-  //  QSqlQueryModel*historique();
-
+    void save_historique(QString);
 private:
     QString CIN;
     QString nom;
