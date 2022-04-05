@@ -58,7 +58,7 @@ background-color: rgb(255, 255, 255);</string>
          <x>30</x>
          <y>40</y>
          <width>56</width>
-         <height>16</height>
+         <height>21</height>
         </rect>
        </property>
        <property name="text">
@@ -69,7 +69,7 @@ background-color: rgb(255, 255, 255);</string>
        <property name="geometry">
         <rect>
          <x>30</x>
-         <y>70</y>
+         <y>80</y>
          <width>56</width>
          <height>16</height>
         </rect>
@@ -82,7 +82,7 @@ background-color: rgb(255, 255, 255);</string>
        <property name="geometry">
         <rect>
          <x>30</x>
-         <y>110</y>
+         <y>120</y>
          <width>56</width>
          <height>16</height>
         </rect>
@@ -197,7 +197,7 @@ background-color: rgb(255, 255, 255);</string>
      <widget class="QPushButton" name="quitter">
       <property name="geometry">
        <rect>
-        <x>320</x>
+        <x>400</x>
         <y>510</y>
         <width>211</width>
         <height>51</height>
@@ -438,7 +438,7 @@ transition: all 0.4s ease 0s;
      <widget class="QGroupBox" name="groupBox_4">
       <property name="geometry">
        <rect>
-        <x>610</x>
+        <x>810</x>
         <y>460</y>
         <width>301</width>
         <height>101</height>
@@ -491,8 +491,8 @@ transition: all 0.4s ease 0s;
      <widget class="QPushButton" name="historique">
       <property name="geometry">
        <rect>
-        <x>980</x>
-        <y>500</y>
+        <x>1140</x>
+        <y>490</y>
         <width>121</width>
         <height>31</height>
        </rect>

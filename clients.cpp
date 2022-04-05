@@ -286,17 +286,6 @@ void Clients::stat(QCustomPlot *customPlot)
     customPlot->setInteractions(QCP::iRangeDrag | QCP::iRangeZoom);
 
 }
-/*QSqlQueryModel*Clients::historique(QDate date_ajout)
-{
-    QDate rech=date_ajout;
-    QSqlQueryModel* model =new QSqlQueryModel();
-    QSqlQuery query;
-  //  model->setQuery("select * from clients where date_ajout =:date_ajout");
-    query.prepare("select * from clients where date_ajout =:date_ajout ");
-    query.bindValue(":date_ajout",rech);
-
-return model;
-}*/
  void Clients::save_historique(QString selected_date)
  {
 
@@ -323,8 +312,8 @@ return model;
            QDate date_pred;
            bool first = true;
            QDate selected_qdate(selected_date.right(4).toInt(),selected_date.mid(3,2).toInt(),selected_date.left(2).toInt());
-                cout <<" hgv "<<selected_date.toStdString()<<endl;
-                     cout <<" hgv "<<selected_qdate.toString().toStdString()<<endl;
+              //  cout <<" hgv "<<selected_date.toStdString()<<endl;
+                //     cout <<" hgv "<<selected_qdate.toString().toStdString()<<endl;
            while (q.next()) {
                QString date=q.value(datecol).toString().left(10);
                QDate date_ajout(date.left(4).toInt(),date.mid(5,2).toInt(),date.right(2).toInt());
