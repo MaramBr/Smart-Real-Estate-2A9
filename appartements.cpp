@@ -3,6 +3,9 @@
 #include<QString>
 #include <QPdfWriter>
 #include <QPainter>
+#include "mainwindow.h"
+#include "ui_mainwindow.h"
+
 
 Appartements::Appartements()
 {
@@ -11,16 +14,18 @@ Appartements::Appartements()
     nb_chambres=0;
     description_A="";
     id_immeuble=0;
+    image="";
 
 
 }
-Appartements::Appartements(QString id_appartement,int prix,int nb_chambres,QString description_A,int id_immeuble)
+Appartements::Appartements(QString id_appartement,int prix,int nb_chambres,QString description_A,int id_immeuble,QString image)
 {
       this->id_appartement=id_appartement;
       this->prix=prix;
       this->nb_chambres=nb_chambres;
       this->description_A=description_A;
       this->id_immeuble=id_immeuble;
+      this->image=image;
 
 }
  QString Appartements:: getid_appartement()
@@ -43,10 +48,6 @@ int Appartements :: getnb_chambres()
  {
      return id_immeuble;
  }
- QImage Appartements :: getimage()
- {
-     return image;
- }
    void Appartements :: setid_appartement( QString id_appartement)
    {
       this->id_appartement=id_appartement;
@@ -68,28 +69,29 @@ int Appartements :: getnb_chambres()
        {
           this->id_immeuble=id_immeuble;
        }
-        void Appartements :: setimage(QImage image)
-        {
-            this->image=image;
-        }
+
 
         bool Appartements :: ajouter()
         {
 
             QString prix_string=QString::number(prix);
             QString nb_chambres_string=QString::number(nb_chambres);
-
             QString id_immeuble_string=QString::number(id_immeuble);
+            QFile file1(image);
+            if(!file1.open(QIODevice::ReadOnly))
+                qDebug()<<image+"url" ;
+            QByteArray intByteArray=file1.readAll();
                 QSqlQuery query;
 
-                query.prepare("INSERT INTO APPARTEMENTS (id_appartement,prix,nb_chambres,description_A,id_immeuble) "
-                              "VALUES (:id_appartement,:prix,:nb_chambres,:description_A,:id_immeuble)");
+                query.prepare("INSERT INTO APPARTEMENTS (id_appartement,prix,nb_chambres,description_A,id_immeuble,image) "
+                              "VALUES (:id_appartement,:prix,:nb_chambres,:description_A,:id_immeuble,:image)");
                 query.bindValue(":id_appartement",id_appartement);
                 query.bindValue(":prix",prix_string);
                 query.bindValue(":nb_chambres",nb_chambres_string);
 
                 query.bindValue(":description_A",description_A);
                 query.bindValue(":id_immeuble",id_immeuble_string);
+                query.bindValue(":image",intByteArray);
 
 
 
@@ -140,6 +142,11 @@ int Appartements :: getnb_chambres()
                model->setHeaderData(2, Qt::Horizontal, QObject::tr("nb_chambres"));
            model->setHeaderData(3, Qt::Horizontal, QObject::tr("description_A"));
             model->setHeaderData(4, Qt::Horizontal, QObject::tr("id_immeuble"));
+             model->setHeaderData(5, Qt::Horizontal, QObject::tr("image"));
+
+
+
+
 
 
 
@@ -149,7 +156,7 @@ int Appartements :: getnb_chambres()
         QSqlQueryModel * Appartements::triercroissant()
         {
 
-            QSqlQueryModel* model =new QSqlQueryModel();
+            QSqlQueryModel* model =new QSqlQueryModel();  //??
             model->setQuery("select * from APPARTEMENTS order by prix asc");
             model->setHeaderData(0, Qt::Horizontal, QObject::tr("id_appartement"));
              model->setHeaderData(1, Qt::Horizontal, QObject::tr("prix"));
@@ -190,21 +197,20 @@ int Appartements :: getnb_chambres()
 
          QPainter painter(&pdf);
          int i = 4000;
-                painter.setPen(Qt::red);
-                painter.setFont(QFont("Time New Roman", 25));
+                painter.setPen(Qt::red);  //couleur liste des appartements
+                painter.setFont(QFont("Time New Roman", 25));  //taille et police
                 painter.drawText(3000,1400,"Liste Des appartements");
                 painter.setPen(Qt::black);
-                painter.setFont(QFont("Time New Roman", 15));
-                painter.drawRect(100,100,9400,2500); // dimension ta3 rectangle eli fih liste des animaux
-                painter.drawRect(100,3000,9400,500);
-                painter.setFont(QFont("Time New Roman", 9));
+              //  painter.setFont(QFont("Time New Roman", 25));
+                painter.drawRect(100,100,9400,2500); // dimension ta3 rectangle eli fih liste des appartements
+                painter.drawRect(100,3000,9400,500); //dimension du tableau des attributs
+                painter.setFont(QFont("Time New Roman", 9)); //taille et police des attributs
                 painter.drawText(400,3300,"id_appartement");
-                painter.drawText(1350,3300,"prix");
+                painter.drawText(1550,3300,"prix");
                 painter.drawText(2200,3300,"nb_chambres");
                 painter.drawText(3400,3300,"description_A");
                 painter.drawText(4400,3300,"id_immeuble");
-
-                painter.drawRect(100,3000,9400,9000);
+                painter.drawRect(100,3000,9400,9000); //dimension du deuxieme tableau
 
                 QSqlQuery query;
                 query.prepare("select * from Appartements");
@@ -212,13 +218,10 @@ int Appartements :: getnb_chambres()
                 while (query.next())
                 {
                     painter.drawText(400,i,query.value(0).toString());
-                    painter.drawText(1350,i,query.value(1).toString());
+                    painter.drawText(1550,i,query.value(1).toString());
                     painter.drawText(2300,i,query.value(2).toString());
                     painter.drawText(3400,i,query.value(3).toString());
                     painter.drawText(4400,i,query.value(4).toString());
-
-
-
                    i = i + 350;
                 }
                  return query.exec();
@@ -329,4 +332,8 @@ int Appartements :: getnb_chambres()
           customPlot->setInteractions(QCP::iRangeDrag | QCP::iRangeZoom);
 
       }
+
+
+
+
 

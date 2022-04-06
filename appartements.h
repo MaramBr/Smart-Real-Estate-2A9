@@ -9,7 +9,7 @@ class Appartements
 {
 public:
     Appartements();
-    Appartements( QString,int,int,QString,int);
+    Appartements( QString,int,int,QString,int,QString);
      QString getid_appartement();
     QString getdescription_A();
     int getnb_chambres();
@@ -39,8 +39,9 @@ private:
    QString description_A;
 
    int id_immeuble;
-   QImage image;
+   QString image;
 
 };
+
 
 #endif // APPARTEMENTS_H

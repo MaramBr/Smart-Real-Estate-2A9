@@ -36,3 +36,11 @@ FORMS += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+RESOURCES += \
+    ressources.qrc \
+    traduction.qrc
+
+DISTFILES += \
+    img/Mario-PNG-Free-Image (1).png \
+    img/Mario-PNG-Free-Image (1).png

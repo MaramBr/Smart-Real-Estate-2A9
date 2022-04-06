@@ -39,8 +39,20 @@ private slots:
 
     void on_statistiques_clicked();
 
+    void on_exporterpdf_clicked();
+
 private:
     Ui::MainWindow *ui;
     Appartements a,a1,a2,a3,a4;
 };
+class ImageSqlQueryModel : public QSqlQueryModel
+{
+Q_OBJECT
+public:
+    explicit ImageSqlQueryModel(QObject *parent = 0);
+
+    QVariant data(const QModelIndex &item, int role) const;
+};
+
+
 #endif // MAINWINDOW_H

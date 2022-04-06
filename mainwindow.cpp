@@ -24,6 +24,11 @@ MainWindow::MainWindow(QWidget *parent)
     ui->le_prix->setValidator( new QIntValidator(0,999999, this));
     ui->le_id2->setValidator( new QIntValidator(0, 99999, this));
     ui->le_id->setValidator( new QRegExpValidator(QRegExp("[0-9]{1,4}")));
+    //QPixmap outPixmap=QPixmap();
+
+
+
+  //  ui->le_image->setPixmap(outPixmap.scaled(400,200,Qt::KeepAspectRatio));
 
     ui->tab_appartement->setModel(a.afficher());
 
@@ -45,9 +50,10 @@ void MainWindow::on_ajouter_clicked()
        int nb_chambres =ui->le_nbchambres->text().toInt();
        QString description_A =ui->le_description->text();
        int id_immeuble= ui->le_id2->text().toInt();
+       QString image=ui->le_image->text();
 
 
-        Appartements A(id_appartement,prix,nb_chambres,description_A,id_immeuble);
+        Appartements A(id_appartement,prix,nb_chambres,description_A,id_immeuble,image);
         bool test=A.ajouter();
     if (test)
     {
@@ -155,21 +161,12 @@ void MainWindow::on_pushButton_11_clicked()
 
 void MainWindow::on_pushButton_9_clicked()
 {
-    QString filename = QFileDialog::getOpenFileName(this,tr("choose"),"",tr("Images(*.png *.jpg "));
-    if(QString::compare(filename,QString()) != 0)
-    {
-        QImage image;
-        bool valid=image.load(filename);
-        if(valid)
-        {
-            image=image.scaledToWidth(ui->le_image->width(), Qt::SmoothTransformation);
-            ui->le_image->setPixmap(QPixmap::fromImage(image));
-      }
-        else
-        {
-            //error handling
-        }
-        }
+   QSqlQuery q;
+   QString fileName =QFileDialog::getOpenFileName(this,tr("choose an image "),"",tr("All files (*)"));
+
+   qDebug()<<fileName+"url" ;
+   ui->le_image->setText(fileName);
+
 
     }
 
@@ -181,4 +178,32 @@ void MainWindow::on_statistiques_clicked()
 
 
       a.stat(ui->widget);
+}
+ImageSqlQueryModel::ImageSqlQueryModel(QObject *parent) :
+    QSqlQueryModel(parent)
+{
+    // Le blob png est contenu dans la colonne image
+    setQuery("SELECT id, nom, image FROM images");
+}
+
+QVariant ImageSqlQueryModel::data(const QModelIndex &item, int role) const
+{
+    // Colonne pour l'image
+    if (item.column() == 2)
+    {
+        // Evite d'afficher l'image sous forme de texte
+        if (role == Qt::DisplayRole || role == Qt::EditRole)
+            return QVariant();
+        // Renvoie un QPixmap quand la vue demande l'icône de cette
+        // colonne
+        if (role == Qt::DecorationRole)
+        {
+            QVariant variant(QSqlQueryModel::data(item, Qt::DisplayRole));
+            QByteArray bytes(variant.toByteArray());
+            QPixmap pixmap;
+            pixmap.loadFromData(bytes, "png");
+            return pixmap;
+        }
+    }
+    return QSqlQueryModel::data(item, role);
 }
