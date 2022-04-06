@@ -99,3 +99,18 @@ QSqlQueryModel * rdv::tridecroi()
 
 }
 
+QSqlQueryModel * rdv::recherche_date(QString d)
+{
+   // QString res=nom;
+    QSqlQueryModel * model =new QSqlQueryModel();
+     model->setQuery("SELECT * from RDV where DATE_RDV like '"+d+"%' ");
+     model->setHeaderData(0, Qt::Horizontal,QObject:: tr("NUM_RDV"));
+     model->setHeaderData(1, Qt::Horizontal, QObject::tr("DATE_RDV"));
+      model->setHeaderData(2, Qt::Horizontal, QObject::tr("TYPE"));
+      model->setHeaderData(3, Qt::Horizontal, QObject::tr("EMAIL"));
+
+     return model;
+}
+
+
+

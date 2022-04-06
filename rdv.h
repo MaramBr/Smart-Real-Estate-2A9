@@ -46,7 +46,8 @@ public:
     bool supprimer(int);
     bool modifier();
     QSqlQueryModel* Rechercherdv(QString);
-    //QSqlQueryModel * rechercher(QString);
+    QSqlQueryModel* recherche_date(QString);
+     //QSqlQueryModel * rechercher(QString);
     QSqlQueryModel * tricroi();
      QSqlQueryModel * tridecroi();
 };

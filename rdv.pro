@@ -1,6 +1,7 @@
 QT       += core gui
 QT +=charts
 
+QT       += network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -21,12 +22,14 @@ SOURCES += \
     connection.cpp \
     main.cpp \
     mainwindow.cpp \
-    rdv.cpp
+    rdv.cpp \
+    smtp.cpp
 
 HEADERS += \
     connection.h \
     mainwindow.h \
-    rdv.h
+    rdv.h \
+    smtp.h
 
 FORMS += \
     mainwindow.ui

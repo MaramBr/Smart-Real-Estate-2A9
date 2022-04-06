@@ -8,9 +8,6 @@
 #include <QtCharts>
 #include <QPieSlice>
 #include <QPieSeries>
-#include <QRegExpValidator>
-#define EMAIL_RX "^[_a-z0-9-]+(\\.[_a-z0-9-]+)*@[a-z0-9-]+" \
-                 "(\\.[a-z0-9-]+)*(\\.[a-z]{2,4})$"
 
 
 
@@ -19,6 +16,9 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    connect(ui->sendBtn, SIGNAL(clicked()),this, SLOT(sendMail()));
+    connect(ui->exitBtn, SIGNAL(clicked()),this, SLOT(close()));
+    connect(ui->browseBtn, SIGNAL(clicked()), this, SLOT(browse()));
     ui->lineEdit_num->setValidator(new QIntValidator (0,9999,this)) ;
     //ui->emaill->setValidator(new QRegExpValidator(QRegExp("[a-z]{1,10}@[a-z]{1,10}\\.[a-z]{1,10}")));
     //QRegExp rxEmail(EMAIL_RX);
@@ -27,6 +27,41 @@ MainWindow::MainWindow(QWidget *parent)
    // ui->->setValidator(new QIntValidator (0,9999,this)) ;
 
     ui->tableView->setModel(Et.afficher());
+}
+void MainWindow::browse()
+{
+    files.clear();
+
+    QFileDialog dialog(this);
+    dialog.setDirectory(QDir::homePath());
+    dialog.setFileMode(QFileDialog::ExistingFiles);
+
+    if (dialog.exec())
+        files = dialog.selectedFiles();
+
+    QString fileListString;
+    foreach(QString file, files)
+        fileListString.append( "\"" + QFileInfo(file).fileName() + "\" " );
+
+    ui->file->setText( fileListString );
+
+}
+
+void MainWindow::sendMail()
+{
+    Smtp* smtp = new Smtp(ui->uname->text(), ui->paswd->text(), ui->server->text(), ui->port->text().toInt());
+    connect(smtp, SIGNAL(status(QString)), this, SLOT(mailSent(QString)));
+
+    if( !files.isEmpty() )
+        smtp->sendMail(ui->uname->text(), ui->rcpt->text() , ui->subject->text(),ui->msg->toPlainText(), files );
+    else
+        smtp->sendMail(ui->uname->text(), ui->rcpt->text() , ui->subject->text(),ui->msg->toPlainText());
+}
+
+void MainWindow::mailSent(QString status)
+{
+    if(status == "Message sent")
+        QMessageBox::warning( 0, tr( "Qt Simple SMTP client" ), tr( "Message sent!\n\n" ) );
 }
 
 //
@@ -186,3 +221,13 @@ void MainWindow::on_line_edit_Recherche_textChanged()
     ui->tableView->setModel(R.Rechercherdv(rech));
 
 }
+
+
+void MainWindow::on_calendarWidget_clicked(const QDate &date)
+{
+    QString newdate= date.toString("dd/MM/yyyy");
+        qInfo() << newdate ;
+        ui->tableView_2->setModel((R.recherche_date(newdate)));
+}
+
+

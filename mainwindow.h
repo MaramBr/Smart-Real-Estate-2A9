@@ -2,6 +2,9 @@
 #define MAINWINDOW_H
 #include "rdv.h"
 #include <QMainWindow>
+#include "smtp.h"
+#include <QtWidgets/QMessageBox>
+#include <QFileDialog>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -27,10 +30,19 @@ private slots:
     void on_pushButton_4_clicked();
 
     void on_line_edit_Recherche_textChanged();
+    void on_recherche_date(QString d);
+
+    void on_calendarWidget_clicked(const QDate &date);
+    void sendMail();
+    void mailSent(QString);
+    void browse();
+
 
 private:
     Ui::MainWindow *ui;
    rdv Et, Etu,R;
+   QStringList files;
+
 };
 
 
