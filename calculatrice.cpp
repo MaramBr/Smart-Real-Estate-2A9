@@ -1,27 +1,8 @@
-#include "calcul.h"
-#include "ui_calcul.h"
-#include "contrat.h"
-#include <QPixmap>
-#include <QMessageBox>
-#include <QSqlError>
-#include <QString>
-#include <QSqlQuery>
-#include <QDate>
-#include <QObject>
+#include "calculatrice.h"
+#include "ui_calculatrice.h"
 
-#include<qiterator.h>
 
-#include <cstdint>
-#include <cstdlib>
-#include <cstring>
-#include <iostream>
-#include <sstream>
-#include <string>
-#include <vector>
 
-#include <iostream>
-#include <QDebug>
-// Holds current value of calculation
 double calcVal = 0.0;
 
 // Will define if this was the last math button clicked
@@ -29,57 +10,57 @@ bool divTrigger = false;
 bool multTrigger = false;
 bool addTrigger = false;
 bool subTrigger = false;
-calcul::calcul(QWidget *parent) :
+
+
+Calculatrice::Calculatrice(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::calcul)
+    ui(new Ui::Calculatrice)
 {
     ui->setupUi(this);
-    QPixmap pix1("C:/Users/ASUS/Desktop/proj-parental-monitoring-system-2A21-G6-main/application_version_beta/m.jpg");
-    int w1=ui->label_ph->width();
-    int h1=ui->label_ph->height();
-    ui->label_ph->setPixmap(pix1.scaled(w1,h1,Qt::KeepAspectRatio));
-    // Put 0.0 in Display
     ui->Display->setText(QString::number(calcVal));
 
-    // Will hold references to all the number buttons
-    QPushButton *numButtons[10];
+        // Will hold references to all the number buttons
+        QPushButton *numButtons[10];
 
-    // Cycle through locating the buttons
-    for(int i = 0; i < 10; ++i){
-        QString butName = "Button" + QString::number(i);
+        // Cycle through locating the buttons
+        for(int i = 0; i < 10; ++i){
+            QString butName = "Button" + QString::number(i);
 
-        // Get the buttons by name and add to array
-        numButtons[i] = calcul::findChild<QPushButton *>(butName);
+            // Get the buttons by name and add to array
+            numButtons[i] = Calculatrice::findChild<QPushButton *>(butName);
 
-        // When the button is released call num_pressed()
-        connect(numButtons[i], SIGNAL(released()), this,SLOT(NumPressed()));
-    }
+            // When the button is released call num_pressed()
+            connect(numButtons[i], SIGNAL(released()), this,
+                    SLOT(NumPressed()));
+        }
 
-    // Connect signals and slots for math buttons
-    connect(ui->Add, SIGNAL(released()), this,
-            SLOT(MathButtonPressed()));
-    connect(ui->Subtract, SIGNAL(released()), this,
-            SLOT(MathButtonPressed()));
-    connect(ui->Multiply, SIGNAL(released()), this,
-            SLOT(MathButtonPressed()));
-    connect(ui->Divide, SIGNAL(released()), this,
-            SLOT(MathButtonPressed()));
+        // Connect signals and slots for math buttons
+        connect(ui->Add, SIGNAL(released()), this,
+                SLOT(MathButtonPressed()));
+        connect(ui->Subtract, SIGNAL(released()), this,
+                SLOT(MathButtonPressed()));
+        connect(ui->Multiply, SIGNAL(released()), this,
+                SLOT(MathButtonPressed()));
+        connect(ui->Divide, SIGNAL(released()), this,
+                SLOT(MathButtonPressed()));
 
-    // Connect equals button
-    connect(ui->Equals, SIGNAL(released()), this,
-            SLOT(EqualButtonPressed()));
+        // Connect equals button
+        connect(ui->Equals, SIGNAL(released()), this,
+                SLOT(EqualButtonPressed()));
 
-    // Connect change sign
-    connect(ui->ChangeSign, SIGNAL(released()), this,
-            SLOT(ChangeNumberSign()));
+        // Connect change sign
+        connect(ui->ChangeSign, SIGNAL(released()), this,
+                SLOT(ChangeNumberSign()));
+
+   // ui->Display;
 
 }
-calcul::~calcul()
+
+Calculatrice::~Calculatrice()
 {
     delete ui;
 }
-
-void calcul::NumPressed(){
+void Calculatrice::NumPressed(){
 
     // Sender returns a pointer to the button pressed
     QPushButton *button = (QPushButton *)sender();
@@ -110,7 +91,7 @@ void calcul::NumPressed(){
 
     }
 }
-void calcul::MathButtonPressed(){
+void Calculatrice::MathButtonPressed(){
 
     // Cancel out previous math button clicks
     divTrigger = false;
@@ -138,12 +119,12 @@ void calcul::MathButtonPressed(){
         subTrigger = true;
     }
 
-    // Clear display
-    ui->Display->setText("");
+    ui->Display->setText(QString (butVal));
+
+   // ui->Display->setText("");
 
 }
-
-void calcul::EqualButtonPressed(){
+void Calculatrice::EqualButtonPressed(){
 
     // Holds new calculation
     double solution = 0.0;
@@ -169,8 +150,7 @@ void calcul::EqualButtonPressed(){
     ui->Display->setText(QString::number(solution));
 
 }
-
-void calcul::ChangeNumberSign(){
+void Calculatrice::ChangeNumberSign(){
 
     // Get the value in the display
     QString displayVal = ui->Display->text();
@@ -186,27 +166,8 @@ void calcul::ChangeNumberSign(){
 
         // Put solution in display
         ui->Display->setText(QString::number(dblDisplayValSign));
+
     }
 
-}
-void calcul::on_pushButton_r_clicked()
-{
-    hide();
-   Contrat c;
 
-}
-
-void calcul::on_pushButton_Q_clicked()
-{
-    int reponse = QMessageBox::question(this, "Interrogatoire", "Monsieur esque tu est sur tu veux quitter?", QMessageBox ::Yes | QMessageBox::No);
-
-        if (reponse == QMessageBox::Yes)
-        {
-            QMessageBox::critical(this, "bayy bayy", "Ala pouchane !");
-            close();
-        }
-        else if (reponse == QMessageBox::No)
-        {
-            QMessageBox::information(this, "Helloo", "Alors bienvenue!");
-        }
 }

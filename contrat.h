@@ -32,9 +32,10 @@ public:
     QSqlQueryModel* triercroissant();
     QSqlQueryModel* trierdecroissant();
     QSqlQueryModel * recherche(QString numc);
+    void stat(QCustomPlot *customPlot);
 bool display();
     bool supprimer(QString);
-    void stat(QCustomPlot *customPlot);
+
     double calucul();
 
 private:

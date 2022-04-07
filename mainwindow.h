@@ -45,6 +45,8 @@ private slots:
 
     void on_calcul_clicked();
 
+    void on_pushButton_2_clicked();
+
 private:
     Ui::MainWindow *ui;
      Contrat c,C1,c2,c3;

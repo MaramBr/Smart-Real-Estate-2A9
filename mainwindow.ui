@@ -475,21 +475,8 @@
       </widget>
       <widget class="QWidget" name="tab_5">
        <attribute name="title">
-        <string>calculatrice</string>
+        <string>chat</string>
        </attribute>
-       <widget class="QLabel" name="label_ph">
-        <property name="geometry">
-         <rect>
-          <x>50</x>
-          <y>10</y>
-          <width>1501</width>
-          <height>1151</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-       </widget>
       </widget>
      </widget>
     </item>

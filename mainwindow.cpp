@@ -13,7 +13,8 @@
 #include <QSqlQuery>
 #include <QSqlError>
 #include <QDebug>
-#include <calcul.h>
+#include <Calculatrice.h>
+
 
 using namespace qrcodegen;
 
@@ -166,13 +167,9 @@ void MainWindow::on_tab_contrat_activated(const QModelIndex &index)
 {
     Contrat cc;
     QString val = ui->tab_contrat->model()->data(index).toString();
-    Connection c;
-if(!c.createconnect())
-{
-qDebug() <<"failed to open";
-return;
-}
-c.createconnect();
+    //Connection c;
+
+//c.createconnect();
     QSqlQuery query;
     query.prepare("select * from CONTRATS where numc='"+val+"' OR date_signification='"+val+"' OR montant='"+val+"' OR  typec='"+val+"' OR mode_paiement='"+val+"' OR cin='"+val+"' ");
     if (query.exec())
@@ -180,7 +177,7 @@ c.createconnect();
 
         while (query.next())
         {
-            ui->le_num->setText(query.value(0).toString());
+             ui->le_num->setText(query.value(0).toString());
             ui->le_date->setDate(query.value(1).toDate());
             ui->le_montant->setText(query.value(2).toString());
             ui->le_type->setCurrentText(query.value(3).toString());
@@ -188,14 +185,17 @@ c.createconnect();
             ui->le_cin->setText(query.value(5).toString());
         }
     }
+    /*
     else
     {
         QMessageBox::critical(this,tr("erreur"),query.lastError().text());
-    }
+    }*/
 }
 
 void MainWindow::on_CODEQR_clicked()
 {
+    // NOTE: At this point you will use the API to get the encoding and format you want, instead of my hardcoded stuff:
+
     int tabprod=ui->tab_contrat->currentIndex().row();
     QVariant numcc=ui->tab_contrat->model()->data(ui->tab_contrat->model()->index(tabprod,0));
     QString numc= numcc.toString();
@@ -218,7 +218,8 @@ void MainWindow::on_CODEQR_clicked()
 
 
     QImage im(qr.getSize(),qr.getSize(), QImage::Format_RGB888);
-
+    // NOTE: For performance reasons my implementation only draws the foreground parts in supplied color.
+    // It expects background to be prepared already (in white or whatever is preferred).
     for (int y = 0; y < qr.getSize(); y++) {
         for (int x = 0; x < qr.getSize(); x++) {
             int color = qr.getModule(x, y);  // 0 for white, 1 for black
@@ -246,11 +247,18 @@ void MainWindow::on_stattype_clicked()
 
 void MainWindow::on_calcul_clicked()
 {
-    QString val = QString::number(c.calucul_revenu());
-    ui->le_montant->setText(val);
-
+    Calculatrice calc;
+    calc.setModal(true);
+    calc.exec();
    // hide();
-   // calcul c;
-   // c.exec();
+     //calcul cc;
+    //QString val = QString::number(c.calucul());
+    //ui->le_montant->setText(val);
+
+//calcul c;
+
+   //c.exec();
 
 }
+
+

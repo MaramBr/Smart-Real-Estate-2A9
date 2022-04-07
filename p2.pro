@@ -16,7 +16,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    calcul.cpp \
+    calculatrice.cpp \
     connexion.cpp \
     contrat.cpp \
     main.cpp \
@@ -26,14 +26,16 @@ SOURCES += \
 
 HEADERS += \
     QrCode.hpp \
-    calcul.h \
+    calculatrice.h \
+    calculatrice.h \
     connexion.h \
     contrat.h \
     mainwindow.h \
     qcustomplot.h
 
 FORMS += \
-    calcul.ui \
+    calculatrice.ui \
+    calculatrice.ui \
     mainwindow.ui
 
 # Default rules for deployment.
@@ -41,5 +43,7 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
-DISTFILES += \
-    english.qm
+DISTFILES +=
+
+RESOURCES += \
+    traduction.qrc
