@@ -32,12 +32,12 @@
     <message>
         <location filename="mainwindow.ui" line="122"/>
         <source>type</source>
-        <translation>Type</translation>
+        <translation>type</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="138"/>
         <source>location</source>
-        <translation>Location</translation>
+        <translation>location</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="145"/>
@@ -47,12 +47,12 @@
     <message>
         <location filename="mainwindow.ui" line="171"/>
         <source>Modifier Rendez-vous</source>
-        <translation>Modify meeting</translation>
+        <translation>modify meeting</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="188"/>
         <source>Ajouter Rendez-vous</source>
-        <translation>Add meeting</translation>
+        <translation>add meeting</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="211"/>
@@ -62,17 +62,17 @@
     <message>
         <location filename="mainwindow.ui" line="225"/>
         <source>Suppression d&apos;un Rendez-vous</source>
-        <translation>Delete meeting</translation>
+        <translation>delete meeting</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="237"/>
         <source>Supprimer</source>
-        <translation>Delete</translation>
+        <translation>delete</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="284"/>
         <source>Liste des Rendez-vous</source>
-        <translation>Meeting list</translation>
+        <translation>meeting list</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="307"/>
@@ -82,7 +82,7 @@
     <message>
         <location filename="mainwindow.ui" line="335"/>
         <source>Trier</source>
-        <translation>Sort</translation>
+        <translation>sort</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="347"/>
@@ -97,113 +97,236 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="mainwindow.ui" line="365"/>
         <source>tri croissant </source>
-        <translation>Ascending sort </translation>
+        <translation>asc sort </translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="378"/>
         <source>tri décroissant</source>
-        <translation>Descending sort</translation>
+        <translation>desc sort</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="392"/>
-        <location filename="mainwindow.ui" line="414"/>
         <source>statistique</source>
         <translation>statistic</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="406"/>
+        <source>Calendrier</source>
+        <translation>calendar</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="467"/>
+        <source>mailing</source>
+        <translation>mailing</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="501"/>
+        <source>smtp.gmail.com</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="508"/>
+        <source>Server port:</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="515"/>
+        <source>465</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="522"/>
+        <source>Username:</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="532"/>
+        <source>Password:</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="549"/>
+        <source>Recipant to:</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="559"/>
+        <source>Subject:</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="569"/>
+        <source>Attachment:</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="585"/>
+        <source>Browse...</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="594"/>
+        <source>Message:</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="604"/>
+        <source>Smtp-server:</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="631"/>
+        <source>Send</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="644"/>
+        <source>Exit</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="60"/>
+        <source>Qt Simple SMTP client</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="60"/>
+        <source>Message sent!
+
+</source>
+        <translation></translation>
     </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="main.cpp" line="16"/>
-        <location filename="mainwindow.cpp" line="57"/>
-        <location filename="mainwindow.cpp" line="76"/>
-        <location filename="mainwindow.cpp" line="104"/>
+        <location filename="main.cpp" line="28"/>
+        <location filename="mainwindow.cpp" line="88"/>
+        <location filename="mainwindow.cpp" line="107"/>
+        <location filename="mainwindow.cpp" line="135"/>
         <source>Database is open</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="17"/>
+        <location filename="main.cpp" line="29"/>
         <source>Connection successful</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="23"/>
-        <location filename="mainwindow.cpp" line="62"/>
-        <location filename="mainwindow.cpp" line="81"/>
-        <location filename="mainwindow.cpp" line="109"/>
+        <location filename="main.cpp" line="35"/>
+        <location filename="mainwindow.cpp" line="93"/>
+        <location filename="mainwindow.cpp" line="112"/>
+        <location filename="mainwindow.cpp" line="140"/>
         <source>Database is not open</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="24"/>
+        <location filename="main.cpp" line="36"/>
         <source>Connection failed</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="58"/>
+        <location filename="mainwindow.cpp" line="89"/>
         <source>Ajout effectué</source>
-        <translation>Addition made</translation>
+        <translation>add done</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="63"/>
+        <location filename="mainwindow.cpp" line="94"/>
         <source>Ajouter non effectué</source>
-        <translation>addition not made</translation>
+        <translation>add not done</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="77"/>
+        <location filename="mainwindow.cpp" line="108"/>
         <source>Suppression effectué</source>
-        <translation>deletetion done</translation>
+        <translation>delete done</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="82"/>
+        <location filename="mainwindow.cpp" line="113"/>
         <source>Suppression non effectué</source>
-        <translation>deletion not made</translation>
+        <translation>delete not done</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="105"/>
+        <location filename="mainwindow.cpp" line="136"/>
         <source>modification effectué</source>
-        <translation>change made</translation>
+        <translation>update done</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="110"/>
+        <location filename="mainwindow.cpp" line="141"/>
         <source>modification non effectué</source>
-        <translation>change not made</translation>
+        <translation>update not done</translation>
     </message>
     <message>
         <location filename="rdv.cpp" line="30"/>
         <location filename="rdv.cpp" line="72"/>
         <location filename="rdv.cpp" line="83"/>
         <location filename="rdv.cpp" line="94"/>
+        <location filename="rdv.cpp" line="107"/>
         <source>NUM_RDV</source>
-        <translation>meeting_number</translation>
+        <translation>Num_meeting</translation>
     </message>
     <message>
         <location filename="rdv.cpp" line="31"/>
         <location filename="rdv.cpp" line="73"/>
         <location filename="rdv.cpp" line="84"/>
         <location filename="rdv.cpp" line="95"/>
+        <location filename="rdv.cpp" line="108"/>
         <source>DATE_RDV</source>
-        <translation>meeting_date</translation>
+        <translation>date_meeting</translation>
     </message>
     <message>
         <location filename="rdv.cpp" line="32"/>
         <source>type</source>
-        <translation>type</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="rdv.cpp" line="33"/>
         <location filename="rdv.cpp" line="75"/>
         <location filename="rdv.cpp" line="86"/>
         <location filename="rdv.cpp" line="97"/>
+        <location filename="rdv.cpp" line="110"/>
         <source>EMAIL</source>
-        <translation>email</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="rdv.cpp" line="74"/>
         <location filename="rdv.cpp" line="85"/>
         <location filename="rdv.cpp" line="96"/>
+        <location filename="rdv.cpp" line="109"/>
         <source>TYPE</source>
-        <translation>type</translation>
+        <translation></translation>
+    </message>
+</context>
+<context>
+    <name>Smtp</name>
+    <message>
+        <location filename="smtp.cpp" line="66"/>
+        <location filename="smtp.cpp" line="257"/>
+        <source>Qt Simple SMTP client</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="smtp.cpp" line="66"/>
+        <source>Couldn&apos;t open the file
+
+</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="smtp.cpp" line="247"/>
+        <source>Message sent</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="smtp.cpp" line="257"/>
+        <source>Unexpected reply from SMTP server:
+
+</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="smtp.cpp" line="259"/>
+        <source>Failed to send message</source>
+        <translation></translation>
     </message>
 </context>
 </TS>
