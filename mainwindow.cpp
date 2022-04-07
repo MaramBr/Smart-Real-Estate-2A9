@@ -20,11 +20,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->exitBtn, SIGNAL(clicked()),this, SLOT(close()));
     connect(ui->browseBtn, SIGNAL(clicked()), this, SLOT(browse()));
     ui->lineEdit_num->setValidator(new QIntValidator (0,9999,this)) ;
-    //ui->emaill->setValidator(new QRegExpValidator(QRegExp("[a-z]{1,10}@[a-z]{1,10}\\.[a-z]{1,10}")));
-    //QRegExp rxEmail(EMAIL_RX);
-        //QRegExpValidator *valiEmail = new QRegExpValidator(rxEmail, this);
-       // ui->email->setValidator(valiEmail);
-   // ui->->setValidator(new QIntValidator (0,9999,this)) ;
+
 
     ui->tableView->setModel(Et.afficher());
 }
