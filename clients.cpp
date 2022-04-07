@@ -199,7 +199,7 @@ bool Clients::excel()
 
 void Clients::stat(QCustomPlot *customPlot)
 {
-    QSqlQuery query,query1;
+    QSqlQuery query;
     // set dark background gradient:
     QLinearGradient gradient(0, 0, 0, 400);
     gradient.setColorAt(0, QColor(156, 212, 114));
