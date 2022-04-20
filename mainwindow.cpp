@@ -15,6 +15,8 @@
 #include <QUrl>
 #include <qcustomplot.h>
 #include <iostream>
+#include <QSqlError>
+
 using namespace std;
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -32,6 +34,20 @@ MainWindow::MainWindow(QWidget *parent)
     QString current_date=QDateTime::currentDateTime().toString("dd.MM.yyyy");
     QDate current_qdate(current_date.right(4).toInt(),current_date.mid(3,2).toInt(),current_date.left(2).toInt());
     ui->choixdate->setDate(current_qdate);
+
+
+    //Arduino: connect label to updatelabel
+            int ret=A.connect_arduino(); // lancer la connexion à arduino
+            switch(ret){
+            case(0):qDebug()<< "arduino is available and connected to : "<< A.getarduino_port_name();
+                break;
+            case(1):qDebug() << "arduino is available but not connected to :" <<A.getarduino_port_name();
+               break;
+            case(-1):qDebug() << "arduino is not available";
+            }
+            //Connecter the Arduino Slot
+             QObject::connect(A.getserial(),SIGNAL(readyRead()),this,SLOT(update_label())); // permet de lancer
+             //le slot update_label suite à la reception du signal readyRead (reception des données).
 
 }
 MainWindow::~MainWindow()
@@ -159,3 +175,41 @@ void MainWindow::on_historique_clicked()
     QString lien  = "file:///C:/historique/histo.txt";
     QDesktopServices::openUrl(QUrl(lien, QUrl::TolerantMode));
 }
+void MainWindow::update_label()
+{
+    data=A.read_from_arduino();
+    qDebug() << data;
+    QString temp = QString::fromStdString(data.toStdString());
+    //qDebug() << temp;
+
+     //clavier
+     ui->CIN->setText(temp);
+     int te=temp.toInt();
+          QSqlQuery query;
+          query.prepare("SELECT NOM_E FROM EMPLOYES where ID_EMPLOYE=:t");
+          query.bindValue(":t",te);
+          query.exec();
+          if(!query.exec()) {
+                  QMessageBox::critical(this, tr("Erreur base de données"),
+                      tr("Erreur lors de l'exécution de la requête: %1")
+                                       /* .arg(query.lastError().text())*/);
+                  return;
+              }
+              if (!query.first()) {
+                 // QMessageBox::warning(this, QObject::tr("Erreur !"),
+                    //  "CIN employe inexistant");
+                       ui->Etat->setText("CIN invalable");
+                       //A.write_to_arduino("0");
+
+                  return;
+              }
+              else{
+          //QString state=query.value(0).toString();
+          ui->Etat->setText("CIN valable");
+
+          A.write_to_arduino("1");
+
+          }
+
+}
+
