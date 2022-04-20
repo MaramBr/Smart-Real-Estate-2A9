@@ -8,7 +8,7 @@ const byte COLS = 3;
 
 int servo_pin=10;
 
-int pos=180;
+//int pos=180;
 
 char hexaKeys[ROWS][COLS] = {
   {'1', '2', '3'},

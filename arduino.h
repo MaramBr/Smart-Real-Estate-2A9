@@ -2,8 +2,8 @@
 #define ARDUINO_H
 
 
-#include <QtSerialPort/QSerialPort>
-#include <QtSerialPort/QSerialPortInfo>
+#include <QtSerialPort/QSerialPort>   //classe rassemblant des fonctions permettant l'echange des données dans une liaison serie
+#include <QtSerialPort/QSerialPortInfo>  //classe fournissant des informations sur les ports disponibles
 #include <QDebug>
 
 

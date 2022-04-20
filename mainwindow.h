@@ -48,7 +48,7 @@ private:
     Ui::MainWindow *ui;
     Clients c,c1,c2,c3,c4;
     //Arduino
-    QByteArray data; // variable contenant les données reçues
+    QByteArray data; // variable contenant les données reçues d'arduino
     arduino A; // objet temporaire
 };
 #endif // MAINWINDOW_H
