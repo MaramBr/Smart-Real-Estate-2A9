@@ -23,7 +23,6 @@ private slots:
     void update_label();   // slot permettant la mise à jour du label état de la lampe 1,
     // ce slot est lancé à chaque réception d'un message de Arduino
 
-
     void on_ajouter_clicked();
 
     void on_supprimer_clicked();
@@ -50,7 +49,6 @@ private:
     Clients c,c1,c2,c3,c4;
     //Arduino
     QByteArray data; // variable contenant les données reçues
-
     arduino A; // objet temporaire
 };
 #endif // MAINWINDOW_H
