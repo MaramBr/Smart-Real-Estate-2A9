@@ -254,7 +254,7 @@ else if  (data=="2")
          q.first();
      ui->arduinoo->setText(q.value(1).toString());
         ui->pre->setText(q.value(2).toString()); }
-   // ui->textEdit->append(data);
+    //ui->textEdit->append(data);
 
 
 
