@@ -37,6 +37,18 @@ ui->le_cin->setValidator( new QRegExpValidator(QRegExp("[1-9]{1,8}")));
 
 //ui->le_cin->setValidator( new QRegExpValidator(QRegExp("{1,10}")));
 
+//Arduino
+int ret=A.connect_arduino(); // lancer la connexion à arduino
+switch(ret){
+case(0):qDebug()<< "arduino is available and connected to : "<< A.getarduino_port_name();
+    break;
+case(1):qDebug() << "arduino is available but not connected to :" <<A.getarduino_port_name();
+   break;
+case(-1):qDebug() << "arduino is not available";
+}
+ QObject::connect(A.getserial(),SIGNAL(readyRead()),this,SLOT(update_label())); // permet de lancer
+ //le slot update_label suite à la reception du signal readyRead (reception des données).
+
 
 }
 
@@ -210,7 +222,6 @@ void MainWindow::on_CODEQR_clicked()
         typec=qry.value(2).toString();
         mode_paiement=qry.value(3).toString();
        // cin==qry.value(4).toString();
-
     }
    // numcs=QString::number(numc);
     numc="numc: "+montant+" montant: "+typec+" typec: "+mode_paiement+"mode_paiement: ";
@@ -260,5 +271,39 @@ void MainWindow::on_calcul_clicked()
    //c.exec();
 
 }
+void MainWindow::update_label()
+{
+    data=A.read_from_arduino();//lire les information de arduino vers qt
+        qDebug() << data;
+        QString temp = QString::fromStdString(data.toStdString());
+        qDebug() << temp;
+         //capteur presence + distance
+         ui->Distance->setText(temp);
+         if (temp.toFloat()<20 && temp.toFloat()!=0 ) // Il Y A une alarme sonor + insertion BD
+         {
+            ui->Etat->setText("DANGER");
+            A.write_to_arduino("1");
+             QSqlQuery query;
+                 int te=temp.toInt();
+                 //prepare()prend la requete en param pour la preparer a l'execution
+                  query.prepare("insert into alarme (distance) values(:dis)");
+                 //creation des variable liés
+                 query.bindValue(":dis",te);
+             query.exec();
+             if(!query.exec()) {
+                     QMessageBox::critical(this, tr("Erreur base de données"),
+                         tr("Erreur lors de l'exécution de la requête: %1")
+                                           .arg(query.lastError().text()));
+                     return;
+                 }
+         }
+         else
+         {
+              ui->Etat->setText("En Sécurité");
+         }
 
-
+}
+void MainWindow::on_pushButton_alarme_clicked()
+{
+             ui->tableView_alarme->setModel(A.afficherAlarme());
+}

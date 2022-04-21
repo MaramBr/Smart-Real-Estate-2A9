@@ -3,6 +3,7 @@
 #include "contrat.h"
 #include <QMainWindow>
 #include "QrCode.hpp"
+#include "arduino.h"
 
 #include <vector>
 QT_BEGIN_NAMESPACE
@@ -19,6 +20,9 @@ public:
 
 
 private slots:
+    //Arduino
+    void update_label();   // slot permettant la mise à jour du label état de la lampe 1,
+    // ce slot est lancé à chaque réception d'un message de Arduino
 
 
     void on_ajout_clicked();
@@ -37,7 +41,7 @@ private slots:
 
     void on_tab_contrat_activated(const QModelIndex &index);
 
-    void on_QR_code_clicked();
+    //void on_QR_code_clicked();
 
     void on_CODEQR_clicked();
 
@@ -45,10 +49,17 @@ private slots:
 
     void on_calcul_clicked();
 
-    void on_pushButton_2_clicked();
+    //void on_pushButton_2_clicked();
+
+    void on_pushButton_alarme_clicked();
 
 private:
     Ui::MainWindow *ui;
      Contrat c,C1,c2,c3;
+
+     //Arduino
+     QByteArray data; // variable contenant les données reçues
+
+     Arduino A; // objet temporaire
 };
 #endif // MAINWINDOW_H

@@ -29,13 +29,13 @@ int main(int argc, char *argv[])
     MainWindow w;
     if(test)
     {w.show();
-        QMessageBox::critical(nullptr, QObject::tr("database is open"),
+        QMessageBox::information(nullptr, QObject::tr("database is open"),
                     QObject::tr("connection successful.\n"
                                 "Click Cancel to exit."), QMessageBox::Cancel);
 
 }
     else
-        QMessageBox::critical(nullptr, QObject::tr("database is not open"),
+        QMessageBox::information(nullptr, QObject::tr("database is not open"),
                     QObject::tr("connection failed.\n"
                                 "Click Cancel to exit."), QMessageBox::Cancel);
 
