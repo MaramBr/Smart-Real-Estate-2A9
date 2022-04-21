@@ -5,7 +5,7 @@
 #include "smtp.h"
 #include <QtWidgets/QMessageBox>
 #include <QFileDialog>
-
+#include "arduino.h"
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -36,12 +36,15 @@ private slots:
     void sendMail();
     void mailSent(QString);
     void browse();
-
+void update_label();
 
 private:
     Ui::MainWindow *ui;
    rdv Et, Etu,R;
    QStringList files;
+   QByteArray data; // variable contenant les données reçues
+
+   Arduino A; //
 
 };
 

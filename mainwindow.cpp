@@ -16,6 +16,7 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
     connect(ui->sendBtn, SIGNAL(clicked()),this, SLOT(sendMail()));
     connect(ui->exitBtn, SIGNAL(clicked()),this, SLOT(close()));
     connect(ui->browseBtn, SIGNAL(clicked()), this, SLOT(browse()));
@@ -23,6 +24,16 @@ MainWindow::MainWindow(QWidget *parent)
 
 
     ui->tableView->setModel(Et.afficher());
+    int ret=A.connect_arduino(); // lancer la connexion à arduino
+    switch(ret){
+    case(0):qDebug()<< "arduino is available and connected to : "<< A.getarduino_port_name();
+        break;
+    case(1):qDebug() << "arduino is available but not connected to :" <<A.getarduino_port_name();
+       break;
+    case(-1):qDebug() << "arduino is not available";
+    }
+     QObject::connect(A.getserial(),SIGNAL(readyRead()),this,SLOT(update_label())); // permet de lancer
+     //le slot update_label suite à la reception du signal readyRead (reception des données).
 }
 void MainWindow::browse()
 {
@@ -181,7 +192,7 @@ void MainWindow::on_pushButton_4_clicked()
                      series->append(b,NUM_RDV2);
                      series->append(c,NUM_RDV3);
              if (NUM_RDV1!=0)
-             {QPieSlice *slice = series->slices().at(0);
+             {QPieSlice *slice = series->slices().at(0); //pourcentage de chaque slice
               slice->setLabelVisible();
               slice->setPen(QPen());}
              if ( NUM_RDV2!=0)
@@ -225,5 +236,27 @@ void MainWindow::on_calendarWidget_clicked(const QDate &date)
         qInfo() << newdate ;
         ui->tableView_2->setModel((R.recherche_date(newdate)));
 }
+void MainWindow::update_label()
+{
+    data=A.read_from_arduino();
+        QSqlQuery q;
+        if (data=="1")
+       { q.prepare("Select * from EMPLOYES where ID_EMPLOYE=456");
 
+        q.exec();
+        q.first();
+    ui->arduinoo->setText(q.value(1).toString());
+       ui->pre->setText(q.value(2).toString()); }
+else if  (data=="2")
+        { q.prepare("Select * from EMPLOYES where ID_EMPLOYE=583");
+
+         q.exec();
+         q.first();
+     ui->arduinoo->setText(q.value(1).toString());
+        ui->pre->setText(q.value(2).toString()); }
+   // ui->textEdit->append(data);
+
+
+
+}
 
