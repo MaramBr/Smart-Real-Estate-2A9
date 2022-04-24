@@ -41,7 +41,6 @@ private slots:
 
     void on_tab_contrat_activated(const QModelIndex &index);
 
-    //void on_QR_code_clicked();
 
     void on_CODEQR_clicked();
 
@@ -49,7 +48,6 @@ private slots:
 
     void on_calcul_clicked();
 
-    //void on_pushButton_2_clicked();
 
     void on_pushButton_alarme_clicked();
 

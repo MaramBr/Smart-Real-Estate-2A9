@@ -61,16 +61,11 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_ajout_clicked()
 {
-
-
     QString numc= ui->le_num->text();
-
-
     QDate date_signification =ui->le_date->date();
     int montant =ui->le_montant->text().toInt();
     QString typec =ui->le_type->currentText();
     QString mode_paiement =ui->le_mode->text();
-
    QString cin =ui->le_cin->text();
     Contrat C(numc,date_signification,montant,typec,mode_paiement,cin);
    bool test=C.ajouter();

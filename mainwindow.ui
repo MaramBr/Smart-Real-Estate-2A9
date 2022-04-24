@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1552</width>
-    <height>1341</height>
+    <width>1811</width>
+    <height>851</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,7 +18,7 @@
     <item>
      <widget class="QTabWidget" name="tab_contrat_2">
       <property name="currentIndex">
-       <number>3</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="tab">
        <attribute name="title">
@@ -473,11 +473,6 @@
         </property>
        </widget>
       </widget>
-      <widget class="QWidget" name="tab_5">
-       <attribute name="title">
-        <string>chat</string>
-       </attribute>
-      </widget>
       <widget class="QWidget" name="tab_2">
        <attribute name="title">
         <string>Embarqué</string>
@@ -580,7 +575,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1552</width>
+     <width>1811</width>
      <height>26</height>
     </rect>
    </property>

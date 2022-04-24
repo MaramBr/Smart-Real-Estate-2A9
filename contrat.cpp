@@ -47,22 +47,18 @@ void Contrat ::setmode(QString mode_paiement){this->mode_paiement=mode_paiement;
 void Contrat::setcin(QString cin) {this->cin=cin;}
 bool Contrat::ajouter()
 {
-
-    //QString numc_string=QString::number(numc);
     QString montant_string=QString::number(montant);
 
-    QSqlQuery query;
-
-    query.prepare("INSERT INTO CONTRATS (numc,date_signification,montant,typec,mode_paiement,cin) "
-                  "VALUES (:numc,:date_signification,:montant,:typec,:mode_paiement,:cin)");
-    query.bindValue(":numc",numc);
-    query.bindValue(":date_signification",date_signification);
-    query.bindValue(":montant",montant_string);
-    query.bindValue(":typec",typec);
-    query.bindValue(":mode_paiement",mode_paiement);
-    query.bindValue(":cin",cin);
-
-    return query.exec();
+    QSqlQuery queury;
+    queury.prepare("INSERT INTO CONTRATS (numc,date_signification,montant,TYPEC,mode_paiement,cin)"
+                   "VALUES(:numc,:date_signification,:montant,:typec,:mode_paiement,:cin)");
+    queury.bindValue(":numc",numc);
+    queury.bindValue(":date_signification",date_signification);
+    queury.bindValue(":montant",montant_string);
+    queury.bindValue(":typec",typec);
+    queury.bindValue(":mode_paiement",mode_paiement);
+    queury.bindValue(":cin",cin);
+    return queury.exec();
 
 }
 bool Contrat::modifier(QString numc,QDate date_signification,int montant,QString typec,QString mode_paiement,QString cin)
