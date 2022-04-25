@@ -161,7 +161,7 @@ void MainWindow::on_pushButton_11_clicked()
 
 void MainWindow::on_pushButton_9_clicked()
 {
-   QSqlQuery q;
+   //QSqlQuery q;
    QString fileName =QFileDialog::getOpenFileName(this,tr("choose an image "),"",tr("All files (*)"));
 
    qDebug()<<fileName+"url" ;

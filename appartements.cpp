@@ -194,23 +194,22 @@ int Appartements :: getnb_chambres()
       {
 
           QPdfWriter pdf("C:/pdf/a.pdf");
-
-         QPainter painter(&pdf);
-         int i = 4000;
-                painter.setPen(Qt::red);  //couleur liste des appartements
-                painter.setFont(QFont("Time New Roman", 25));  //taille et police
+          QPainter painter(&pdf);
+          int i = 4000;
+                painter.setPen(Qt::red);
+                painter.setFont(QFont("Time New Roman", 25));
                 painter.drawText(3000,1400,"Liste Des appartements");
                 painter.setPen(Qt::black);
               //  painter.setFont(QFont("Time New Roman", 25));
-                painter.drawRect(100,100,9400,2500); // dimension ta3 rectangle eli fih liste des appartements
-                painter.drawRect(100,3000,9400,500); //dimension du tableau des attributs
-                painter.setFont(QFont("Time New Roman", 9)); //taille et police des attributs
+                painter.drawRect(100,100,9400,2500); // dimension rectangle liste des appartements
+                painter.drawRect(100,3000,9400,500);
+                painter.setFont(QFont("Time New Roman", 9));
                 painter.drawText(400,3300,"id_appartement");
                 painter.drawText(1550,3300,"prix");
                 painter.drawText(2200,3300,"nb_chambres");
                 painter.drawText(3400,3300,"description_A");
                 painter.drawText(4400,3300,"id_immeuble");
-                painter.drawRect(100,3000,9400,9000); //dimension du deuxieme tableau
+                painter.drawRect(100,3000,9400,9000);
 
                 QSqlQuery query;
                 query.prepare("select * from Appartements");
@@ -231,10 +230,10 @@ int Appartements :: getnb_chambres()
       {
           QSqlQuery query,query1;
           // set dark background gradient:
-          QLinearGradient gradient(0, 0, 0, 400);
-          gradient.setColorAt(0, QColor(156, 212, 114));
-          gradient.setColorAt(0.38, QColor(191, 234, 170));
-          gradient.setColorAt(1, QColor(212, 236, 201));
+          QLinearGradient gradient(0, 0, 0, 400);  //degradation couleurs
+          gradient.setColorAt(0, QColor(41, 171, 145));
+          gradient.setColorAt(0.38, QColor(22, 230, 208));
+          gradient.setColorAt(1, QColor(255, 255, 255));
           customPlot->clearPlottables();
           customPlot->clearGraphs();
           customPlot->replot();
@@ -249,8 +248,8 @@ int Appartements :: getnb_chambres()
           fossil->setStackingGap(1);
           // set names and colors:
           fossil->setName("statistique selon le prix");
-          fossil->setPen(QPen(QColor(111, 9, 176).lighter(170)));
-          fossil->setBrush(QColor(111, 9, 176));
+          fossil->setPen(QPen(QColor(26, 188, 156).lighter(170)));
+          fossil->setBrush(QColor(26, 188, 156));
 
           QVector<double> ticks;
           QVector<QString> labels;
