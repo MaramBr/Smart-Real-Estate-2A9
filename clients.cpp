@@ -202,9 +202,9 @@ void Clients::stat(QCustomPlot *customPlot)
     QSqlQuery query;
     // set dark background gradient:
     QLinearGradient gradient(0, 0, 0, 400);
-    gradient.setColorAt(0, QColor(156, 212, 114));
-    gradient.setColorAt(0.38, QColor(191, 234, 170));
-    gradient.setColorAt(1, QColor(212, 236, 201));
+    gradient.setColorAt(0, QColor(41, 171, 145));
+    gradient.setColorAt(0.38, QColor(22, 230, 208));
+    gradient.setColorAt(1, QColor(255, 255, 255));
     customPlot->clearPlottables();
     customPlot->clearGraphs();
     customPlot->replot();
@@ -219,8 +219,8 @@ void Clients::stat(QCustomPlot *customPlot)
     fossil->setStackingGap(1);
     // set names and colors:
     fossil->setName("statistique selon le type de clients");
-    fossil->setPen(QPen(QColor(125, 198, 209).lighter(170)));
-    fossil->setBrush(QColor(125, 198, 209));
+    fossil->setPen(QPen(QColor(26, 188, 156).lighter(170)));
+    fossil->setBrush(QColor(26, 188, 156));
 
     QVector<double> ticks;
     QVector<QString> labels;

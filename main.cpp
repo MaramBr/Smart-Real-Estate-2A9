@@ -12,7 +12,7 @@ int main(int argc, char *argv[])
     QTranslator t;
         QTranslator guiTranslator;
        QStringList languages;
-       languages <<"Frensh"<<"English";
+       languages <<"Francais"<<"English";
        QString lang = QInputDialog::getItem(NULL,"select Language",
                                             "Language",languages);
        if(lang=="English")
