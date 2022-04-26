@@ -22,6 +22,7 @@ SOURCES += \
     clients.cpp \
     connexion.cpp \
     contrat.cpp \
+    employee.cpp \
     main.cpp \
     mainwindow.cpp \
     qcustomplot.cpp \
@@ -35,6 +36,7 @@ HEADERS += \
     clients.h \
     connexion.h \
     contrat.h \
+    employee.h \
     mainwindow.h \
     qcustomplot.h
 
