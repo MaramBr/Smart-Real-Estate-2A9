@@ -16,6 +16,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    appartement.cpp \
     arduino.cpp \
     calculatrice.cpp \
     clients.cpp \
@@ -28,6 +29,7 @@ SOURCES += \
 
 HEADERS += \
     QrCode.hpp \
+    appartement.h \
     arduino.h \
     calculatrice.h \
     clients.h \

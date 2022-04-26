@@ -11,6 +11,7 @@
 #include <qcustomplot.h>
 #include <QrCode.hpp>
 
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -37,6 +38,23 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->le_montant->setValidator( new QIntValidator(0,999999, this));
     ui->le_cinc->setValidator( new QRegExpValidator(QRegExp("[1-9]{1,8}")));
+    //pour les appartements
+    ui->tab_appartement->setModel(a.afficher());
+
+   ui->le_nbchambres->setValidator( new QIntValidator(0,9, this));
+   ui->le_prix->setValidator( new QIntValidator(0,999999, this));
+   ui->le_id2->setValidator( new QIntValidator(0, 99999, this));
+   ui->le_id->setValidator( new QRegExpValidator(QRegExp("[0-9]{1,4}")));
+   //QPixmap outPixmap=QPixmap();
+
+
+
+ //  ui->le_image->setPixmap(outPixmap.scaled(400,200,Qt::KeepAspectRatio));
+
+   ui->tab_appartement->setModel(a.afficher());
+
+
+
 // Arduino pour tous
     int ret=A.connect_arduino(); // lancer la connexion à arduino
     switch(ret){
@@ -461,4 +479,141 @@ void MainWindow::on_retour_4_clicked()
 void MainWindow::on_retour_3_clicked()
 {
     ui->tabWidget->setCurrentIndex(0);
+}
+
+
+
+void MainWindow::on_retour_5_clicked()
+{
+    ui->tabWidget->setCurrentIndex(0);
+}
+
+void MainWindow::on_pushButton_7_clicked()
+{
+    ui->tabWidget->setCurrentIndex(3);
+}
+
+void MainWindow::on_quitter_clicked()
+{
+   close();
+}
+
+void MainWindow::on_ajouter_appartement_clicked()
+{
+    QString id_appartement= ui->le_id->text();
+    int prix =ui->le_prix->text().toInt();
+    int nb_chambres =ui->le_nbchambres->text().toInt();
+    QString description_A =ui->le_description->text();
+    int id_immeuble= ui->le_id2->text().toInt();
+    QString image=ui->le_image->text();
+
+
+     Appartements A(id_appartement,prix,nb_chambres,description_A,id_immeuble,image);
+     bool test=A.ajouter();
+ if (test)
+ {
+     ui->tab_appartement->setModel(a.afficher());
+     QMessageBox::information(nullptr, QObject::tr(" ok"),
+                              QObject::tr("ajout effecte  .\n"
+                                          "Click Cancel to exit."), QMessageBox::Cancel);
+
+    }
+    else
+    {
+
+     QMessageBox::critical(nullptr, QObject::tr("not ok"),
+                 QObject::tr("ajout non effecte .\n"
+                             "Click Cancel to exit."), QMessageBox::Cancel);
+    }
+}
+
+void MainWindow::on_modifier_appartement_clicked()
+{
+    Appartements a2;
+
+        a2.setid_appartement(ui->le_id->text());
+        a2.setprix(ui->le_prix->text().toInt());
+        a2.setnb_chambres(ui->le_nbchambres->text().toInt());
+        a2.setdescription_A(ui->le_description->text());
+        a2.setid_immeuble(ui->le_id2->text().toInt());
+
+       bool test=a2.modifier(a2.getid_appartement(),a2.getprix(),a2.getnb_chambres(),a2.getdescription_A(),a2.getid_immeuble());
+    if (test)
+    {
+        ui->tab_appartement->setModel(a2.afficher());
+
+        QMessageBox::information(nullptr, QObject::tr(" ok"),
+                                 QObject::tr("modif effecte  .\n"
+                                             "Click Cancel to exit."), QMessageBox::Cancel);
+
+       }
+       else
+       {
+
+        QMessageBox::critical(nullptr, QObject::tr("not ok"),
+                    QObject::tr("modif non effecte .\n"
+                                "Click Cancel to exit."), QMessageBox::Cancel);
+       }
+}
+
+void MainWindow::on_supprimer_appartement_clicked()
+{
+    Appartements a1;
+
+        a1.setid_appartement(ui->id_supp->text());
+        bool test =a1.supprimer(a1.getid_appartement());
+        QMessageBox msgBox;
+        if(test)
+        {
+             ui->tab_appartement->setModel(a1.afficher());
+            msgBox.setText("suppression aves succes.");
+        }
+        else
+            msgBox.setText("echec de suppression");
+        msgBox.exec();
+}
+
+void MainWindow::on_rech_appartement_clicked()
+{
+    Appartements a3;
+    a3.setid_appartement(ui->id_rech->text());
+    ui->tab_appartement->setModel(a3.rechercher(a3.getid_appartement()));
+}
+
+void MainWindow::on_radioButton_7_clicked()
+{
+    ui->tab_appartement->setModel(a.triercroissant());
+}
+
+void MainWindow::on_radioButton_8_clicked()
+{
+    ui->tab_appartement->setModel(a.trierdecroissant());
+}
+
+void MainWindow::on_pdf_clicked()
+{
+    Appartements a4;
+    a4.pdf();
+    QString PdfFileName ="C:/pdf/a.pdf" ;
+    QDesktopServices::openUrl(QUrl(PdfFileName, QUrl::TolerantMode));
+         // QMessageBox::information(this, QObject::tr("PDF Enregistré!"),
+          //QObject::tr("PDF Enregistré!.\n" "Click Cancel to exit."), QMessageBox::Cancel);
+}
+
+void MainWindow::on_pushButton_10_clicked()
+{
+    //QSqlQuery q;
+    QString fileName =QFileDialog::getOpenFileName(this,tr("choose an image "),"",tr("All files (*)"));
+
+    qDebug()<<fileName+"url" ;
+    ui->le_image->setText(fileName);
+}
+
+void MainWindow::on_stattype_3_clicked()
+{
+    ui->tab2->setCurrentIndex(1);
+      Appartements a;
+
+
+      a.stat(ui->widget_9);
 }

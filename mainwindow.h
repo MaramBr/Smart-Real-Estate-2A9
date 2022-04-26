@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <clients.h>
 #include <contrat.h>
+#include <appartement.h>
 #include <arduino.h>
 
 QT_BEGIN_NAMESPACE
@@ -78,7 +79,6 @@ private slots:
 
     void on_pushButton_alarme_clicked();
 
-    void on_ushButton_12_clicked();
 
     void on_quitter_3_clicked();
 
@@ -88,12 +88,40 @@ private slots:
 
     void on_retour_3_clicked();
 
+
+
+    void on_retour_5_clicked();
+
+    void on_pushButton_7_clicked();
+
+    void on_quitter_clicked();
+
+    void on_ajouter_appartement_clicked();
+
+    void on_modifier_appartement_clicked();
+
+    void on_supprimer_appartement_clicked();
+
+    void on_rech_appartement_clicked();
+
+    void on_radioButton_7_clicked();
+
+    void on_radioButton_8_clicked();
+
+    void on_pdf_clicked();
+
+    void on_pushButton_10_clicked();
+
+    void on_stattype_3_clicked();
+
 private:
     Ui::MainWindow *ui;
     //Client
     Clients C,C1,C2,C3;
     //Contrat
 Contrat c,c1,c2,c3;
+    //appartement
+Appartements a,a1,a2;
 //Arduinoo
 QByteArray data; // variable contenant les données reçues
 Arduino A,A1,A2;
