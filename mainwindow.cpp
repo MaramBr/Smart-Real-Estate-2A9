@@ -260,3 +260,18 @@ else if  (data=="2")
 
 }
 
+
+void MainWindow::on_pushButton_5_clicked()
+{
+    if ((ui->arduinoo->text()=="ziedi" ) and (ui->pre->text()=="mey") )
+    {
+    A.write_to_arduino("1");
+    }
+    else if ((ui->arduinoo->text()=="brinsi" ) and (ui->pre->text()=="maram") )
+    {
+    A.write_to_arduino("1");
+    }
+    else {
+        A.write_to_arduino("3");
+    }
+}
