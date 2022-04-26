@@ -38,8 +38,6 @@ private slots:
     void browse();
 void update_label();
 
-void on_pushButton_5_clicked();
-
 private:
     Ui::MainWindow *ui;
    rdv Et, Etu,R;
