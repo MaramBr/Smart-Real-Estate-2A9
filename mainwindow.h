@@ -7,6 +7,7 @@
 #include <appartement.h>
 #include <arduino.h>
 #include <employee.h>
+#include <immeuble.h>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -105,6 +106,7 @@ private slots:
 
 
 
+
     void on_login_clicked();
 
     void on_client_clicked();
@@ -133,6 +135,30 @@ private slots:
 
     void on_retourpar_clicked();
 
+    void on_quitter_immeuble_clicked();
+
+     void on_retour_immeuble_clicked();
+//immeuble
+    void on_ajouterimmeuble_clicked();
+
+    void on_modifierimmeuble_clicked();
+
+    void on_supprimerimmeuble_clicked();
+
+    void on_rechimmeuble_clicked();
+
+    void on_triimmeuble_clicked();
+
+    void on_triimmeuble_2_clicked();
+
+
+
+
+
+    void on_statimmeuble_clicked();
+
+    void on_immeuble_clicked();
+
 private:
     Ui::MainWindow *ui;
     QStackedWidget *stackedWidget;
@@ -146,6 +172,8 @@ Contrat c,c1,c2,c3;
 Appartements a,a1,a2;
 //employees
 employee e,e1,e2,e3;
+//immeuble
+ immeuble Etmp,Etmp1;
 //Arduinoo
 QByteArray data; // variable contenant les données reçues
 Arduino A,A1,A2;

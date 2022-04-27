@@ -67,6 +67,9 @@ MainWindow::MainWindow(QWidget *parent)
    //ui->adr_re->setValidator(new QRegExpValidator(QRegExp("[a-z]{1,10}")));
    ui->tab_employes_3->setModel(e.afficher());
 
+   //pour immeuble
+
+   ui->tab_immeuble->setModel(Etmp.afficher());
 
 // Arduino pour tous
     int ret=A.connect_arduino(); // lancer la connexion à arduino
@@ -798,4 +801,116 @@ void MainWindow::on_retourpar_clicked()
 {
     ui->stackedWidget->setCurrentIndex(1);
      ui->tabWidget_2->setCurrentIndex(0);
+}
+
+void MainWindow::on_ajouterimmeuble_clicked()
+{
+    int id_immeuble = ui->idimmeuble->text().toInt();
+    QString adresse = ui->adresseimmeuble->text();
+    QString description = ui->desimmeuble->text();
+    int nb_etage = ui->nbimmeuble->text().toInt();
+
+    immeuble I(id_immeuble, nb_etage, adresse, description);
+    bool test = I.ajouter();
+
+    if (test){
+        ui->tab_immeuble->setModel(Etmp.afficher());
+        QMessageBox::information(nullptr, QObject::tr("Database is open"),
+                              QObject::tr("Ajout effectué"),
+                              QMessageBox::Ok
+                              );
+    }else{
+        QMessageBox::critical(nullptr, QObject::tr("Database is not open"),
+                              QObject::tr("Ajouter non effectué"),
+                              QMessageBox::Cancel
+                              );
+    }
+}
+
+void MainWindow::on_modifierimmeuble_clicked()
+{
+    int id_immeuble = ui->idimmeuble->text().toInt();
+    QString adresse = ui->adresseimmeuble->text();
+    QString description = ui->desimmeuble->text();
+    int nb_etage = ui->nbimmeuble->text().toInt();
+
+
+    immeuble I(id_immeuble, nb_etage, adresse, description);
+    bool test = I.modifier(id_immeuble);
+    if (test){
+        ui->tab_immeuble->setModel(I.afficher());
+        QMessageBox::information(nullptr, QObject::tr("Database is open"),
+                              QObject::tr("modification effectué"),
+                              QMessageBox::Ok
+                              );
+    }else{
+        QMessageBox::critical(nullptr, QObject::tr("Database is not open"),
+                              QObject::tr("modification non effectué"),
+                              QMessageBox::Cancel
+                              );
+    }
+}
+
+void MainWindow::on_supprimerimmeuble_clicked()
+{
+    int id_immeuble = ui->idimmeuble_2->text().toInt();
+
+    bool test = Etmp.supprimer(id_immeuble);
+
+    if (test){
+        ui->tab_immeuble->setModel(Etmp.afficher());
+        QMessageBox::information(nullptr, QObject::tr("Database is open"),
+                              QObject::tr("Suppression effectué"),
+                              QMessageBox::Ok
+                              );
+    }else{
+        QMessageBox::critical(nullptr, QObject::tr("Database is not open"),
+                              QObject::tr("Suppression non effectué"),
+                              QMessageBox::Cancel
+                              );
+    }
+}
+
+void MainWindow::on_rechimmeuble_clicked()
+{
+    immeuble I;
+    QString rech_field = ui->adresseimmeuble_2->text();
+    ui->tab_immeuble->setModel(I.chercher(rech_field));
+}
+
+void MainWindow::on_triimmeuble_clicked()
+{
+    immeuble I;
+    ui->tab_immeuble->setModel(I.triercroissant());
+}
+
+void MainWindow::on_triimmeuble_2_clicked()
+{
+    immeuble I;
+    ui->tab_immeuble->setModel(I.trierdecroissant());
+}
+
+void MainWindow::on_quitter_immeuble_clicked()
+{
+    close();
+}
+
+void MainWindow::on_retour_immeuble_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(1);
+     ui->tabWidget_2->setCurrentIndex(0);
+
+}
+
+void MainWindow::on_statimmeuble_clicked()
+{
+    ui->tab_immeuble_2->setCurrentIndex(1);
+        immeuble Etmp1;
+       Etmp1.statimmeuble(ui->widget_immeuble);
+}
+
+void MainWindow::on_immeuble_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(7);
+    ui->tab_immeuble_2->setCurrentIndex(0);
 }
