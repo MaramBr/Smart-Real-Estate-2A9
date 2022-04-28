@@ -80,6 +80,7 @@ int Arduino::write_to_arduino( QByteArray d)
 
 
 }
+
 QSqlQueryModel * Arduino::afficherAlarme()
 {
     QSqlQueryModel * model=new QSqlQueryModel();

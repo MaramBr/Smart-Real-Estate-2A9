@@ -11,6 +11,9 @@
 #include<QImage>
 #include <qcustomplot.h>
 #include <QrCode.hpp>
+#include "smtp.h"
+#include <QtWidgets/QMessageBox>
+#include <QFileDialog>
 
 
 MainWindow::MainWindow(QWidget *parent)
@@ -19,7 +22,9 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-
+    connect(ui->sendBtn, SIGNAL(clicked()),this, SLOT(sendMail()));
+    connect(ui->exitBtn, SIGNAL(clicked()),this, SLOT(close()));
+    connect(ui->browseBtn, SIGNAL(clicked()), this, SLOT(browse()));
 //pour les clients
     ui->tab_clients_3->setModel(C.afficher());
     ui->le_cin_3->setValidator( new QRegExpValidator (QRegExp("[0-9]{1,8}")));
@@ -69,10 +74,28 @@ MainWindow::MainWindow(QWidget *parent)
 
    //pour immeuble
 
-   ui->tab_immeuble->setModel(Etmp.afficher());
+  ui->tab_immeuble->setModel(Etmp.afficher());
+
+  //pour rdv
+
+     ui->numrdv->setValidator(new QIntValidator (0,9999,this)) ;
 
 // Arduino pour tous
-    int ret=A.connect_arduino(); // lancer la connexion à arduino
+/*
+   int ret1=A1.connect_arduino(); // lancer la connexion à arduino
+   switch(ret1){
+   case(0):qDebug()<< "arduino is available and connected to : "<< A1.getarduino_port_name();
+       break;
+   case(1):qDebug() << "arduino is available but not connected to :" <<A1.getarduino_port_name();
+      break;
+   case(-1):qDebug() << "arduino is not available";
+   }
+   QObject::connect(A1.getserial(),SIGNAL(readyRead()),this,SLOT(update_alarme())); // permet de lancer
+   //le slot update_label suite à la reception du signal readyRead (reception des données).
+
+*/
+
+   int ret=A.connect_arduino(); // lancer la connexion à arduino
     switch(ret){
     case(0):qDebug()<< "arduino is available and connected to : "<< A.getarduino_port_name();
         break;
@@ -81,11 +104,47 @@ MainWindow::MainWindow(QWidget *parent)
     case(-1):qDebug() << "arduino is not available";
     }
 
-    QObject::connect(A1.getserial(),SIGNAL(readyRead()),this,SLOT(update_alarme())); // permet de lancer
-         //le slot update_label suite à la reception du signal readyRead (reception des données).
+
          QObject::connect(A.getserial(),SIGNAL(readyRead()),this,SLOT(update_parking())); // permet de lancer
          //le slot update_label suite à la reception du signal readyRead (reception des données).
 }
+void MainWindow::browse()
+{
+    files.clear();
+
+    QFileDialog dialog(this);
+    dialog.setDirectory(QDir::homePath());
+    dialog.setFileMode(QFileDialog::ExistingFiles);
+
+    if (dialog.exec())
+        files = dialog.selectedFiles();
+
+    QString fileListString;
+    foreach(QString file, files)
+        fileListString.append( "\"" + QFileInfo(file).fileName() + "\" " );
+
+    ui->file->setText( fileListString );
+
+}
+
+void MainWindow::sendMail()
+{
+    Smtp* smtp = new Smtp(ui->uname->text(), ui->paswd->text(), ui->server->text(), ui->port->text().toInt());
+    connect(smtp, SIGNAL(status(QString)), this, SLOT(mailSent(QString)));
+
+    if( !files.isEmpty() )
+        smtp->sendMail(ui->uname->text(), ui->rcpt->text() , ui->subject->text(),ui->msg->toPlainText(), files );
+    else
+        smtp->sendMail(ui->uname->text(), ui->rcpt->text() , ui->subject->text(),ui->msg->toPlainText());
+}
+
+void MainWindow::mailSent(QString status)
+{
+    if(status == "Message sent")
+        QMessageBox::warning( 0, tr( "Qt Simple SMTP client" ), tr( "Message sent!\n\n" ) );
+}
+
+
 
 MainWindow::~MainWindow()
 {
@@ -377,18 +436,22 @@ void MainWindow::on_stattype_8_clicked()
 
 void MainWindow::update_alarme()
 {
-    data=A1.read_from_arduino();//lire les information de arduino vers qt
-        qDebug() << data;
-        QString temp = QString::fromStdString(data.toStdString());
-        qDebug() << temp;
+   QByteArray data1;
+    data1=A1.read_from_arduino();//lire les information de arduino vers qt
+        qDebug() << data1;
+        QString temp1 = QString::fromStdString(data1.toStdString());
+        qDebug() << temp1;
+
          //capteur presence + distance
-         ui->Distance->setText(temp);
-         if (temp.toFloat()<20 && temp.toFloat()!=0 ) // Il Y A une alarme sonor + insertion BD
+      //  ui->stackedWidget->setCurrentIndex(9);
+        ui->tabWidget_9->setCurrentIndex(0);
+         ui->Distance->setText(temp1);
+         if (temp1.toFloat()<20 && temp1.toFloat()!=0 ) // Il Y A une alarme sonor + insertion BD
          {
             ui->Etat->setText("DANGER");
             A1.write_to_arduino("1");
              QSqlQuery query;
-                 int te=temp.toInt();
+                 int te=temp1.toInt();
                  //prepare()prend la requete en param pour la preparer a l'execution
                   query.prepare("insert into alarme (distance) values(:dis)");
                  //creation des variable liés
@@ -397,7 +460,7 @@ void MainWindow::update_alarme()
              if(!query.exec()) {
                      QMessageBox::critical(this, tr("Erreur base de données"),
                          tr("Erreur lors de l'exécution de la requête: %1")
-                                           /*.arg(query.lastError().text())*/);
+                                          /* .arg(query.lastError().text())*/);
                      return;
                  }
          }
@@ -416,6 +479,7 @@ void MainWindow::update_parking()
     //qDebug() << temp;
 
      //clavier
+    ui->tabWidget_5->setCurrentIndex(0);
      ui->CIN->setText(temp);
      int te=temp.toInt();
           QSqlQuery query;
@@ -447,7 +511,7 @@ void MainWindow::update_parking()
 
 void MainWindow::on_pushButton_alarme_clicked()
 {
-    ui->tableView_alarme->setModel(A1.afficherAlarme());
+    ui->tableView_alarme->setModel(A.afficherAlarme());
 
 }
 
@@ -739,7 +803,7 @@ void MainWindow::on_Appar_clicked()
 
 void MainWindow::on_embarque_clicked()
 {
-    ui->stackedWidget->setCurrentIndex(6);
+    ui->stackedWidget->setCurrentIndex(8);
     ui->tabWidget_5->setCurrentIndex(0);
 }
 
@@ -757,8 +821,8 @@ void MainWindow::on_quitterCl_clicked()
 
 void MainWindow::on_retourC_clicked()
 {
-    ui->stackedWidget->setCurrentIndex(6);
-    ui->tabWidget_5->setCurrentIndex(0);
+    ui->stackedWidget->setCurrentIndex(9);
+    ui->tabWidget_9->setCurrentIndex(0);
 
 }
 
@@ -782,8 +846,8 @@ void MainWindow::on_quitterApp_clicked()
 
 void MainWindow::on_retouremp_clicked()
 {
-    ui->stackedWidget->setCurrentIndex(6);
-    ui->tabWidget_5->setCurrentIndex(0);
+    ui->stackedWidget->setCurrentIndex(9);
+    ui->tabWidget_9->setCurrentIndex(0);
 }
 
 void MainWindow::on_quitteremp_clicked()
@@ -801,6 +865,117 @@ void MainWindow::on_retourpar_clicked()
 {
     ui->stackedWidget->setCurrentIndex(1);
      ui->tabWidget_2->setCurrentIndex(0);
+}
+
+
+
+void MainWindow::on_ajouterrdv_clicked()
+{
+    int NUM_RDV = ui->numrdv->text().toInt();
+    QString DATE_RDV = ui->daterdv->text();
+    QString type_r=ui->typerdv->currentText();
+    QString EMAIL= ui->emailrdv->text();
+
+
+
+    rdv R (NUM_RDV,DATE_RDV,type_r,EMAIL);
+    bool test = R.ajouter();
+
+    if (test){
+        ui->tab_rdv->setModel(R.afficher());
+        QMessageBox::information(nullptr, QObject::tr("Database is open"),
+                              QObject::tr("Ajout effectué"),
+                              QMessageBox::Ok
+                              );
+    }else{
+        QMessageBox::critical(nullptr, QObject::tr("Database is not open"),
+                              QObject::tr("Ajouter non effectué"),
+                              QMessageBox::Cancel
+                              );
+    }
+}
+
+void MainWindow::on_modifrdv_clicked()
+{
+    // modifier
+        int NUM_RDV = ui->numrdv->text().toInt();
+        QString DATE_RDV = ui->daterdv->text();
+        QString type=ui->typerdv->currentText();
+        QString EMAIL=ui->emailrdv->text();
+       rdv R2 (NUM_RDV,DATE_RDV,type,EMAIL);
+        //rdv R2(NUM_RDV, DATE_RDV,type,EMAIL);
+        bool test = R2.modifier();
+        if (test){
+            ui->tab_rdv->setModel(R2.afficher());
+            QMessageBox::information(nullptr, QObject::tr("Database is open"),
+                                  QObject::tr("modification effectué"),
+                                  QMessageBox::Ok
+                                  );
+        }else{
+            QMessageBox::critical(nullptr, QObject::tr("Database is not open"),
+                                  QObject::tr("modification non effectué"),
+                                  QMessageBox::Cancel
+                                  );
+        }
+}
+
+void MainWindow::on_supprdv_clicked()
+{
+    int num_rdv = ui->numrdv_2->text().toInt();
+    bool test = R1.supprimer(num_rdv);
+
+    if (test){
+        ui->tab_rdv->setModel(R1.afficher());
+        QMessageBox::information(nullptr, QObject::tr("Database is open"),
+                              QObject::tr("Suppression effectué"),
+                              QMessageBox::Ok
+                              );
+    }else{
+        QMessageBox::critical(nullptr, QObject::tr("Database is not open"),
+                              QObject::tr("Suppression non effectué"),
+                              QMessageBox::Cancel
+                              );
+    }
+}
+
+
+
+void MainWindow::on_radioButton_5_clicked()
+{
+     ui->tab_rdv->setModel(R.tricroi());
+}
+
+void MainWindow::on_radioButton_6_clicked()
+{
+    ui->tab_rdv->setModel(R.tridecroi());
+}
+
+void MainWindow::on_statrdv_clicked()
+{
+    ui->tabWidget_3->setCurrentIndex(1);
+      rdv r;
+
+
+      r.statrdv(ui->widgetrdv);
+}
+
+void MainWindow::on_numrdv_3_textChanged()
+{
+    QString rech=ui->numrdv_3->text();
+    ui->tab_rdv->setModel(R.Rechercherdv(rech));
+}
+
+void MainWindow::on_calendarWidget_2_clicked(const QDate &date)
+{
+    QString newdate= date.toString("dd/MM/yyyy");
+    qInfo() << newdate ;
+    ui->tableView3M->setModel((R3.recherche_date(newdate)));
+}
+
+void MainWindow::on_RDV_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(6);
+    ui->tabWidget_3->setCurrentIndex(0);
 }
 
 void MainWindow::on_ajouterimmeuble_clicked()
@@ -913,4 +1088,15 @@ void MainWindow::on_immeuble_clicked()
 {
     ui->stackedWidget->setCurrentIndex(7);
     ui->tab_immeuble_2->setCurrentIndex(0);
+}
+
+void MainWindow::on_quitterrdv_clicked()
+{
+    close();
+}
+
+void MainWindow::on_retourrdv_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(1);
+     ui->tabWidget_2->setCurrentIndex(0);
 }

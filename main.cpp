@@ -12,12 +12,11 @@ int main(int argc, char *argv[])
 
     Connection c;
     bool test=c.createconnect();
-//*********************
-    /*
+
     QTranslator t;
      QTranslator guiTranslator;
     QStringList languages;
-    languages <<"Frensh"<<"English";
+    languages <<"Francais"<<"English";
     QString lang = QInputDialog::getItem(NULL,"select Language",
                                          "Language",languages);
     if(lang=="English")
@@ -25,8 +24,7 @@ int main(int argc, char *argv[])
         t.load(":/english.qm");
         a.installTranslator(&t);
     }
-*/
-//**********************
+
     MainWindow w;
     if(test)
     {w.show();

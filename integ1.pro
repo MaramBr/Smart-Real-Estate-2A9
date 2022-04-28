@@ -1,5 +1,6 @@
 QT       += core gui sql serialport
-
+QT       += core gui network
+QT       += network
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += c++11
@@ -27,7 +28,9 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     qcustomplot.cpp \
-    qrcode.cpp
+    qrcode.cpp \
+    rdv.cpp \
+    smtp.cpp
 
 HEADERS += \
     QrCode.hpp \
@@ -40,7 +43,9 @@ HEADERS += \
     employee.h \
     immeuble.h \
     mainwindow.h \
-    qcustomplot.h
+    qcustomplot.h \
+    rdv.h \
+    smtp.h
 
 FORMS += \
     calculatrice.ui \
@@ -52,4 +57,5 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 RESOURCES += \
-    resource.qrc
+    resource.qrc \
+    traduction.qrc

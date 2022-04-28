@@ -6,8 +6,13 @@
 #include <contrat.h>
 #include <appartement.h>
 #include <arduino.h>
+#include <arduinoalarme.h>
 #include <employee.h>
 #include <immeuble.h>
+#include <rdv.h>
+#include "smtp.h"
+#include <QtWidgets/QMessageBox>
+#include <QFileDialog>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -159,6 +164,37 @@ private slots:
 
     void on_immeuble_clicked();
 
+    void on_ajouterrdv_clicked();
+
+    void on_modifrdv_clicked();
+
+    void on_supprdv_clicked();
+
+    void on_radioButton_5_clicked();
+
+    void on_radioButton_6_clicked();
+
+    void on_statrdv_clicked();
+
+
+
+    void on_numrdv_3_textChanged();
+
+    void on_calendarWidget_2_clicked(const QDate &date);
+
+    void on_RDV_clicked();
+
+    void on_quitterrdv_clicked();
+
+    void on_retourrdv_clicked();
+
+    void sendMail();
+        void mailSent(QString);
+        void browse();
+
+
+
+
 private:
     Ui::MainWindow *ui;
     QStackedWidget *stackedWidget;
@@ -172,10 +208,14 @@ Contrat c,c1,c2,c3;
 Appartements a,a1,a2;
 //employees
 employee e,e1,e2,e3;
+//Rendez-vous
+rdv R,R1,R2,R3;
+QStringList files;
 //immeuble
  immeuble Etmp,Etmp1;
 //Arduinoo
 QByteArray data; // variable contenant les données reçues
-Arduino A,A1,A2;
+Arduino A,A1;
+
 };
 #endif // MAINWINDOW_H
